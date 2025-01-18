@@ -8,3 +8,4 @@ import App from './App';
 registerRootComponent(App);
 
 window.onload.alert("Hello")
+// A

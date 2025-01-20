@@ -6,6 +6,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage'; // For dat
 import { createStaticNavigation, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+
+
+/*
+--------------Logs
+Date: 1/20/25 | User: Christopher |
+Content: Added pages and a proper loading screen
+Date: _______ | User: ____ |
+Content: ____________________________
+*/
+
+
+
 // Local User Data Manager
 class localDataManager {
   static dataLoaded = false;
@@ -81,6 +93,10 @@ class localDataManager {
   }
 };
 
+
+
+
+
 export default function App() {
   //Initial Setup
   localDataManager.loadUserData();
@@ -149,6 +165,10 @@ export default function App() {
   );
 }
 
+
+
+
+
 // CSS
 const styles = StyleSheet.create({
   loadingBackground: {
@@ -159,6 +179,9 @@ const styles = StyleSheet.create({
   },
 
 });
+
+
+
 
 
 /*

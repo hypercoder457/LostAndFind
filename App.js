@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TouchableHighlight, Image, TextInput, View, SafeAreaView, Alert, NavigationContainer, Animated, useAnimatedValue } from 'react-native';
+import { StyleSheet, Text, TouchableHighlight, Image, TextInput, View, SafeAreaView, Alert, NavigationContainer, Animated, useAnimatedValue, Button } from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list'; // For dropdown list
 import AsyncStorage from '@react-native-async-storage/async-storage'; // For data storage
 import { createStaticNavigation, useNavigation } from '@react-navigation/native';
@@ -12,6 +12,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 --------------Logs
 Date: 1/20/25 | User: Christopher |
 Content: Added pages and a proper loading screen
+Date: 1/21/25 | User: Christopher |
+Content: Added home page content
 Date: _______ | User: ____ |
 Content: ____________________________
 */
@@ -100,7 +102,10 @@ class localDataManager {
 export default function App() {
   //Initial Setup
   localDataManager.loadUserData();
-  AsyncStorage.clear(); // Leave this in to force the register screen
+  localDataManager.updateUserData("firstName", "Christopher");
+  localDataManager.updateUserData("lastName", "Markham");
+  localDataManager.saveUserData();
+  //AsyncStorage.clear(); // Leave this in to force the register screen
 
   //Web Pages
   function loadingScreen() {
@@ -130,8 +135,24 @@ export default function App() {
   }
   function homeScreen() {
     return (
-      <SafeAreaView>
-        <Text>Welcome to the home screen!</Text>
+      <SafeAreaView style={{backgroundColor: "rgb(145, 187, 179)", height: "100%"}}>
+        <View style={{display: "flex", justifyItems: "center", alignItems: "center", height: "auto"}}>
+          <Text style={{fontSize: 50}}>Lost & Find</Text>
+        </View>
+        <View style={{backgroundColor: "rgb(121, 157, 150)", display: "flex", alignItems: "center", justifyItems: "center", borderRadius: 5}}>
+          <View style={styles.mainOptionIcon}>
+            <Image source={require("./assets/searchIcon.png")} style={{height: 100, width: 100}} />
+            <Text style={{fontSize: 35}}>Recover</Text>
+          </View>
+          <View style={styles.mainOptionIcon}>
+            <Image source={require("./assets/cameraIcon.png")} style={{height: 100, width: 100}} />
+            <Text style={{fontSize: 35}}>Report</Text>
+          </View>
+          <View style={styles.mainOptionIcon}>
+            <Image source={require("./assets/editIcon.png")} style={{height: 100, width: 100}} />
+            <Text style={{fontSize: 35}}>Edit</Text>
+          </View>
+        </View>
       </SafeAreaView>
     );
   }
@@ -152,8 +173,11 @@ export default function App() {
       "Registration Page": {
         screen: registerAccountScreen,
       },
-      "Home Screen": {
+      "Main Page": {
         screen: homeScreen,
+        options: {
+          headerShown: false,
+        },
       },
     },
   });
@@ -176,6 +200,17 @@ const styles = StyleSheet.create({
     backgroundColor: "rgb(100, 100, 100)",
     alignItems: "center",
     justifyContent: "center",
+  },
+
+  mainOptionIcon: {
+    backgroundColor: "rgb(198, 232, 225)",
+    width: 150,
+    height: 150,
+    borderRadius: 10,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 5,
   },
 
 });

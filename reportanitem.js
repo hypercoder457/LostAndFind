@@ -1,5 +1,5 @@
 import React from 'react'; //imports react
-import {Text, View} from 'react-native';
+import { Text, View } from 'react-native';
 
 const ReportItem = () => {
   return (
@@ -9,7 +9,7 @@ const ReportItem = () => {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-      <Text>Report an Item? Test</Text> 
+      <Text>Report an Item? Test</Text>
     </View>
   );
 };

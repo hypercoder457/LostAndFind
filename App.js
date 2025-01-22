@@ -5,7 +5,7 @@ import { SelectList } from 'react-native-dropdown-select-list'; // For dropdown 
 import AsyncStorage from '@react-native-async-storage/async-storage'; // For data storage
 import { createStaticNavigation, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import Login from './Login';
 
 
 /*
@@ -113,9 +113,9 @@ export default function App() {
     async function wait() {
       const results = await localDataManager.waitUntilUserDataLoaded();
       if (results) {
-        navigation.replace("Main Page");
+        navigation.navigate("Home Page");
       } else {
-        navigation.replace("Registration Page");
+        navigation.navigate("Registration Page");
       }
     }
     wait();
@@ -130,27 +130,28 @@ export default function App() {
     return (
       <SafeAreaView>
         <Text>Please Log In!</Text>
+        <Login />
       </SafeAreaView>
     );
   }
   function homeScreen() {
     return (
-      <SafeAreaView style={{backgroundColor: "rgb(145, 187, 179)", height: "100%"}}>
-        <View style={{display: "flex", justifyItems: "center", alignItems: "center", height: "auto"}}>
-          <Text style={{fontSize: 50}}>Lost & Find</Text>
+      <SafeAreaView style={styles.mainContainer}>
+        <View style={{ display: "flex", justifyItems: "center", alignItems: "center", height: "auto" }}>
+          <Text style={{ fontSize: 50 }}>Lost & Find</Text>
         </View>
-        <View style={{backgroundColor: "rgb(121, 157, 150)", display: "flex", alignItems: "center", justifyItems: "center", borderRadius: 5}}>
+        <View style={{ backgroundColor: "rgb(121, 157, 150)", display: "flex", alignItems: "center", justifyItems: "center", borderRadius: 5 }}>
           <View style={styles.mainOptionIcon}>
-            <Image source={require("./assets/searchIcon.png")} style={{height: 100, width: 100}} />
-            <Text style={{fontSize: 35}}>Recover</Text>
+            <Image source={require("./assets/searchIcon.png")} style={styles.icon} />
+            <Text style={styles.textWithIcon}>Recover</Text>
           </View>
           <View style={styles.mainOptionIcon}>
-            <Image source={require("./assets/cameraIcon.png")} style={{height: 100, width: 100}} />
-            <Text style={{fontSize: 35}}>Report</Text>
+            <Image source={require("./assets/cameraIcon.png")} style={styles.icon} />
+            <Text style={styles.textWithIcon}>Report</Text>
           </View>
           <View style={styles.mainOptionIcon}>
-            <Image source={require("./assets/editIcon.png")} style={{height: 100, width: 100}} />
-            <Text style={{fontSize: 35}}>Edit</Text>
+            <Image source={require("./assets/editIcon.png")} style={styles.icon} />
+            <Text style={styles.textWithIcon}>Edit</Text>
           </View>
         </View>
       </SafeAreaView>
@@ -185,7 +186,7 @@ export default function App() {
 
   //Start Up
   return (
-    <Navigation/>
+    <Navigation />
   );
 }
 
@@ -212,7 +213,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     margin: 5,
   },
-
+  mainContainer: {
+    backgroundColor: "rgb(145, 187, 179)",
+    height: "100%"
+  },
+  icon: {
+    height: 100,
+    width: 100
+  },
+  textWithIcon: { fontSize: 35 },
 });
 
 

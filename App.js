@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TouchableHighlight, Image, TextInput, View, SafeAreaView, Alert, NavigationContainer, Animated, useAnimatedValue, Button } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, Image,  View, SafeAreaView, Alert, NavigationContainer, Animated, useAnimatedValue, Button } from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list'; // For dropdown list
 import AsyncStorage from '@react-native-async-storage/async-storage'; // For data storage
 import { createStaticNavigation, useNavigation } from '@react-navigation/native';
@@ -21,7 +21,7 @@ Content: ____________________________
 
 
 // Local User Data Manager
-class localDataManager {
+export class localDataManager {
   static dataLoaded = false;
   static loadingFailed = false;
   static userData = {
@@ -30,9 +30,11 @@ class localDataManager {
     tBNP: "0", // Time Before Next Post
   };
   static async waitUntilUserDataLoaded() {
+    console.log("waitUntilUserDataLoaded() called");
     return new Promise((finished) => {
+      console.log("inside promise");
       const intervalId = setInterval(() => {
-        if (this.dataLoaded) {
+        if (!this.dataLoaded) {
           if (this.userData.firstName == "" || this.userData.lastName == "") {
             clearInterval(intervalId);
             finished(false);
@@ -54,6 +56,7 @@ class localDataManager {
       return;
     }
     this.userData[key] = value;
+    this.dataLoaded = true;
   }
   static async saveUserData() {
     if (!this.dataLoaded) {
@@ -101,17 +104,15 @@ class localDataManager {
 
 export default function App() {
   //Initial Setup
-  localDataManager.loadUserData();
-  localDataManager.updateUserData("firstName", "Christopher");
-  localDataManager.updateUserData("lastName", "Markham");
-  localDataManager.saveUserData();
-  //AsyncStorage.clear(); // Leave this in to force the register screen
+  AsyncStorage.clear(); // Leave this in to force the register screen
 
   //Web Pages
   function loadingScreen() {
     const navigation = useNavigation();
     async function wait() {
+      console.log("Inside WAIT function...");
       const results = await localDataManager.waitUntilUserDataLoaded();
+      console.log("got results");
       if (results) {
         navigation.navigate("Home Page");
       } else {
@@ -127,10 +128,11 @@ export default function App() {
     );
   }
   function registerAccountScreen() {
+    const navigation = useNavigation();
     return (
       <SafeAreaView>
         <Text>Please Log In!</Text>
-        <Login />
+        <Login nav={navigation}/>
       </SafeAreaView>
     );
   }
@@ -174,7 +176,7 @@ export default function App() {
       "Registration Page": {
         screen: registerAccountScreen,
       },
-      "Main Page": {
+      "Home Page": {
         screen: homeScreen,
         options: {
           headerShown: false,

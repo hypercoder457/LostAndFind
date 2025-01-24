@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, View, TextInput, StyleSheet, Text } from "react-native";
-import { localDataManager } from "./App";
+import LocalDataManager from "../LocalDataManager";
 
 export default function Login(props) {
     const { control, handleSubmit, formState: { errors } } = useForm();
@@ -11,10 +11,10 @@ export default function Login(props) {
         // Simulate form submission
         console.log('Submitted Data:', data);
         setSubmittedData(data);
-        localDataManager.loadUserData();
-        localDataManager.updateUserData("firstName", data.firstname);
-        localDataManager.updateUserData("lastName", data.lastname);
-        localDataManager.saveUserData();
+        LocalDataManager.loadUserData();
+        LocalDataManager.updateUserData("firstName", data.firstname);
+        LocalDataManager.updateUserData("lastName", data.lastname);
+        LocalDataManager.saveUserData();
         props.nav.navigate("Home Page");
         console.log("Navigated to Main Page");
     };

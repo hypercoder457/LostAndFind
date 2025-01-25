@@ -1,25 +1,25 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Button, View, TextInput, StyleSheet, Text } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Button, View, TextInput, StyleSheet, Text, SafeAreaView } from "react-native";
 import LocalDataManager from "../LocalDataManager";
 
 export default function Login(props) {
     const { control, handleSubmit, formState: { errors } } = useForm();
     const [submittedData, setSubmittedData] = useState('');
-
+    const navigation = useNavigation();
     const onSubmit = data => {
         // Simulate form submission
         console.log('Submitted Data:', data);
         setSubmittedData(data);
-        LocalDataManager.loadUserData();
         LocalDataManager.updateUserData("firstName", data.firstname);
         LocalDataManager.updateUserData("lastName", data.lastname);
         LocalDataManager.saveUserData();
-        props.nav.navigate("Home Page");
+        navigation.replace("Home Page"); // Use replace to ensure they can't go back to the loading screen!
         console.log("Navigated to Main Page");
     };
-    return (
-        <View>
+    return ( // Use SafeAreaView to ensure the GUI fits on the screen!
+        <SafeAreaView>
             <Controller
                 control={control}
                 name="firstname"
@@ -35,7 +35,7 @@ export default function Login(props) {
             />
             {errors.lastname && <Text style={styles.errorText}>{errors.lastname.message}</Text>}
             <Button title="Login" onPress={handleSubmit(onSubmit)} />
-        </View>
+        </SafeAreaView>
     )
 }
 

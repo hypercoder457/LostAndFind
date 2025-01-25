@@ -12,7 +12,7 @@ export default class LocalDataManager {
     static async waitUntilUserDataLoaded() {
         return new Promise((finished) => {
             const intervalId = setInterval(() => {
-                if (!this.dataLoaded) {
+                if (this.dataLoaded) {
                     if (this.userData.firstName == "" || this.userData.lastName == "") {
                         clearInterval(intervalId);
                         finished(false);

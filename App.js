@@ -3,23 +3,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage'; // For dat
 import { createStaticNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoadingScreen from './screens/LoadingScreen';
-import RegisterAccountScreen from './screens/RegisterAccountScreen';
+import LogInScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
-
-
-/*
---------------Logs
-Date: 1/20/25 | User: Christopher |
-Content: Added pages and a proper loading screen
-Date: 1/21/25 | User: Christopher |
-Content: Added home page content
-Date: _______ | User: ____ |
-Content: ____________________________
-*/
+import ReportAnItemScreen from './screens/ReportAnItemScreen';
 
 export default function App() {
   //Initial Setup
-  AsyncStorage.clear(); // Leave this in to force the register screen
+  //AsyncStorage.clear(); // Leave this in to force the register screen
 
   // Pages
   const RootStack = createNativeStackNavigator({
@@ -34,11 +24,20 @@ export default function App() {
           headerShown: false,
         },
       },
-      "Registration Page": {
-        screen: RegisterAccountScreen,
+      "Log In": {
+        screen: LogInScreen,
+        options: {
+          headerShown: false,
+        },
       },
       "Home Page": {
         screen: HomeScreen,
+        options: {
+          headerShown: false,
+        },
+      },
+      "Report An Item": {
+        screen: ReportAnItemScreen,
         options: {
           headerShown: false,
         },

@@ -1,20 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaView, Image, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+
 import LocalDataManager from "../LocalDataManager";
+import CameraManager from "../CameraManager";
 import styles from "../styles";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoadingScreen() {
+    CameraManager.checkPermission();
+    LocalDataManager.loadUserData();
     const navigation = useNavigation();
     async function wait() {
         const results = await LocalDataManager.waitUntilUserDataLoaded();
         if (results) {
-            navigation.navigate("Home Page");
+            navigation.replace("Home Page");
         } else {
-            navigation.navigate("Registration Page");
+            navigation.replace("Log In");
         }
     }
-    wait();
+    useEffect(() => {
+        wait();
+    });
     return (
         <SafeAreaView style={styles.loadingBackground}>
             <Image source={require("../assets/loading.png")} style={{ width: 50, height: 50, marginBottom: 10 }} />

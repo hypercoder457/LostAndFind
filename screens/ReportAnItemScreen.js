@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useRef, useDebugValue } from "react";
+import React, { useRef } from "react";
 import Checkbox from 'expo-checkbox';
-import { useForm } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
-import { Image, Dimensions, ScrollView, TouchableHighlight, View, SafeAreaView, TextInput, StyleSheet, Text, Pressable, Alert } from "react-native";
+import { Image, Dimensions, ScrollView, TouchableHighlight, View, TextInput, StyleSheet, Text, Pressable, Alert } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { SelectList } from 'react-native-dropdown-select-list';
 
-import LocalDataManager from "../LocalDataManager";
 import CameraManager from "../CameraManager";
 import LocationManager from "../LocationManager";
 import DatabaseKeys from "../DatabaseKeys";
@@ -216,10 +215,10 @@ export default function ReportAnItem(props) {
                 <Text>Location</Text>
                 <View>
                     <Text>Use current location</Text>
-                    <Checkbox value={useAuto} onValueChange={() => {getCurrentLocation()}}/>
-                    <View style={{display: (useAuto ? "none" : "flex")}}>
+                    <Checkbox value={useAuto} onValueChange={() => { getCurrentLocation() }} />
+                    <View style={{ display: (useAuto ? "none" : "flex") }}>
                         <Text>Input location manually</Text>
-                        <TextInput 
+                        <TextInput
                             placeholder="Location"
                             value={manualAddressData}
                             onChangeText={(text) => { setManualAddressData(text) }}
@@ -229,8 +228,8 @@ export default function ReportAnItem(props) {
                     </View>
                 </View>
 
-                <TouchableHighlight onPress={() => {checkForCompletion()}}>
-                    <Text style={{backgroundColor: "rgb(125, 125, 125)", height: 100}}>
+                <TouchableHighlight onPress={() => { checkForCompletion() }}>
+                    <Text style={{ backgroundColor: "rgb(125, 125, 125)", height: 100 }}>
                         Submit report
                     </Text>
                 </TouchableHighlight>

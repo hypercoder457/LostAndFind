@@ -1,5 +1,6 @@
 import React from "react";
-import { SafeAreaView, Text, View, Image, Pressable } from "react-native";
+import { Text, View, Image, Pressable } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles";
 

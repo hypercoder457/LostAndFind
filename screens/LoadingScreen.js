@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
-import { SafeAreaView, Image, Text } from "react-native";
+import { Image, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-
+import { SafeAreaView } from "react-native-safe-area-context";
 import LocalDataManager from "../LocalDataManager";
 import CameraManager from "../CameraManager";
 import LocationManager from "../LocationManager";
 import styles from "../styles";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoadingScreen() {
     LocalDataManager.loadUserData();

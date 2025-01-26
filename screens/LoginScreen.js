@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
-import { Button, View, TextInput, StyleSheet, Text, SafeAreaView } from "react-native";
+import { Button, TextInput, StyleSheet, Text } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import LocalDataManager from "../LocalDataManager";
 
 export default function Login(props) {

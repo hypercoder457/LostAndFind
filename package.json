@@ -21,7 +21,9 @@
     "react-native-alert-notification": "^0.4.2",
     "react-native-dropdown-select-list": "^2.0.5",
     "expo-media-library": "~17.0.5",
-    "expo-image-picker": "~16.0.4"
+    "expo-image-picker": "~16.0.4",
+    "expo-location": "~18.0.5",
+    "expo-checkbox": "~4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

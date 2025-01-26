@@ -4,12 +4,14 @@ import { useNavigation } from "@react-navigation/native";
 
 import LocalDataManager from "../LocalDataManager";
 import CameraManager from "../CameraManager";
+import LocationManager from "../LocationManager";
 import styles from "../styles";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoadingScreen() {
-    CameraManager.checkPermission();
     LocalDataManager.loadUserData();
+    CameraManager.checkPermission();
+    LocationManager.checkPermission();
     const navigation = useNavigation();
     async function wait() {
         const results = await LocalDataManager.waitUntilUserDataLoaded();

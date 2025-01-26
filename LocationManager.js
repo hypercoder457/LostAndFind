@@ -23,7 +23,7 @@ export default class LocationManager {
                 const locationCords = await Location.getCurrentPositionAsync();
                 const address = await Location.reverseGeocodeAsync(locationCords.coords);
                 return(address[0]);
-            } catch(err) {
+            } catch (err) {
                 console.warn("Unable to fetch location!");
             }
         }

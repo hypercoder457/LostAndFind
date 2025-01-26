@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // Local User Data Manager
 export default class LocalDataManager {
     static dataLoaded = false;
-    static loadingFailed = false;
     static userData = {
         firstName: "",
         lastName: "",
@@ -41,10 +40,6 @@ export default class LocalDataManager {
             console.warn("User data has not been loaded. Unable to save!");
             return;
         }
-        if (this.loadingFailed) {
-            console.warn("User data failed to load properly. To avoid corruption, user data will not save!");
-            return;
-        }
         try {
             for (let key in this.userData) {
                 await AsyncStorage.setItem(toString(key), this.userData[key]);
@@ -58,18 +53,18 @@ export default class LocalDataManager {
             console.warn("User data has already been loaded. Unable to load!");
             return;
         }
-        try {
-            for (let key in this.userData) {
-                const valueData = await AsyncStorage.getItem(toString(key));
-                if (valueData !== null) {
-                    this.userData[key] = valueData;
+        while (!this.dataLoaded) {
+            try {
+                for (let key in this.userData) {
+                    const valueData = await AsyncStorage.getItem(toString(key));
+                    if (valueData !== null) {
+                        this.userData[key] = valueData;
+                    }
                 }
+                this.dataLoaded = true;
+            } catch (err) {
+                console.warn("Failed to load user data! Trying again!");
             }
-        } catch (err) {
-            this.loadingFailed = true;
-            console.warn("Unable to load user data! Error:" + err);
-        } finally {
-            this.dataLoaded = true;
         }
     }
 };

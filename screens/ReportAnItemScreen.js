@@ -8,10 +8,11 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import CameraManager from "../CameraManager";
 import LocationManager from "../LocationManager";
 import DatabaseKeys from "../DatabaseKeys";
+import LocalDataManager from "../LocalDataManager";
 
 const windowDimensions = Dimensions.get('window');
 
-const incompleteTicketTitle = "Ticket Incomplete!";
+const incompleteTicketTitle = "Ticket incomplete";
 const minNameLength = 3;
 const minLocationLength = 10;
 
@@ -31,7 +32,7 @@ export default function ReportAnItem(props) {
     const [countyData, setCounty] = React.useState("");
 
     const [imageData, setImageData] = React.useState([]);
-    const [primaryImage, setPrimaryImage] = React.useState(-1);
+    const [primaryImage, setPrimaryImage] = React.useState(0);
     let imageDisplayer = useRef(null);
     let imageInserter = useRef(null);
     const [imageInserterVisible, setInserterVisibilty] = React.useState(true);
@@ -70,6 +71,16 @@ export default function ReportAnItem(props) {
             if (isEmpty(manualAddressData, minLocationLength)) {
                 Alert.alert(incompleteTicketTitle, "Please insert a valid location!");
                 return;
+            }
+        }
+
+        if (LocalDataManager.dataLoaded) {
+            if ("tBNP" in LocalDataManager.userData) {
+                const currentDate = new Date();
+                const futureTime = parseInt(currentDate.getTime()) + 30000;
+                const stringFutureTime = futureTime.toString();
+                LocalDataManager.updateUserData("tBNP", stringFutureTime);
+                LocalDataManager.saveUserData();
             }
         }
         Alert.alert("End of simulation!", "Your data would go to the database if this was not a simulation!");
@@ -118,7 +129,9 @@ export default function ReportAnItem(props) {
         imageDataCopy.splice(index, 1);
         setImageData(imageDataCopy);
         handleImageInserter(imageData.length - 2);
-        setPrimaryImage(primaryImage - 1);
+        if (primaryImage > 0) {
+            setPrimaryImage(primaryImage - 1);
+        }
     }
 
     function makeImagePrimary(index) {

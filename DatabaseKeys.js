@@ -103,15 +103,7 @@ export default class DatabaseKeys {
         {key:99,value:"Yadkin"},
         {key:100,value:"Yancey"},
     ];
-    static categories = 
-    // Categories of lost items 
-    ["Clothing", 
-    "Electronics", 
-    "Item3", 
-    "Item4", 
-    "Item5", 
-    "Item6", 
-    "ItemLONGLONG"];
+    static categories = ["Item1", "Item2", "Item3", "Item4", "Item5", "Item6", "ItemLONGLONG"];
 };
 
 // Change Log: Added all NC counties: Karan 1/26/2024

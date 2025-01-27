@@ -6,13 +6,13 @@ export default class CameraManager {
     static maxPhotos = 3;
 
     static async checkPermission() {
-        const {status} = await MediaLibrary.getPermissionsAsync();
+        const { status } = await MediaLibrary.getPermissionsAsync();
         this.hasPermission = (status == "granted");
     }
 
     static async askForPermission() {
         if (!this.hasPermission) {
-            const {status} = await MediaLibrary.requestPermissionsAsync();
+            const { status } = await MediaLibrary.requestPermissionsAsync();
             this.hasPermission = (status == "granted");
         }
     }
@@ -26,7 +26,7 @@ export default class CameraManager {
             });
 
             if (!results.canceled) {
-                return(results);
+                return (results);
             }
         }
     }

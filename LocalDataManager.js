@@ -7,6 +7,7 @@ export default class LocalDataManager {
         firstName: "",
         lastName: "",
         tBNP: "0", // Time Before Next Post
+        userId: "",
     };
     static async waitUntilUserDataLoaded() {
         return new Promise((finished) => {

@@ -3,7 +3,9 @@ import { useForm, Controller } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import { Button, TextInput, StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import LocalDataManager from "../LocalDataManager";
+import DatabaseManager from "../DatabaseManager";
 
 export default function Login(props) {
     const { control, handleSubmit, formState: { errors } } = useForm();
@@ -16,6 +18,7 @@ export default function Login(props) {
         LocalDataManager.updateUserData("firstName", data.firstname);
         LocalDataManager.updateUserData("lastName", data.lastname);
         LocalDataManager.saveUserData();
+        DatabaseManager.generateUserKey(LocalDataManager);
         navigation.replace("Home Page"); // Use replace to ensure they can't go back to the loading screen!
         console.log("Navigated to Main Page");
     };

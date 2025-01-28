@@ -6,6 +6,7 @@ import LocalDataManager from "../LocalDataManager";
 import CameraManager from "../CameraManager";
 import LocationManager from "../LocationManager";
 import styles from "../styles";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoadingScreen() {
     LocalDataManager.loadUserData();

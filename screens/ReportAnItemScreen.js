@@ -9,6 +9,7 @@ import CameraManager from "../CameraManager";
 import LocationManager from "../LocationManager";
 import DatabaseKeys from "../DatabaseKeys";
 import LocalDataManager from "../LocalDataManager";
+import DatabaseManager from "../DatabaseManager";
 
 const windowDimensions = Dimensions.get('window');
 
@@ -83,7 +84,8 @@ export default function ReportAnItem(props) {
                 LocalDataManager.saveUserData();
             }
         }
-        Alert.alert("End of simulation!", "Your data would go to the database if this was not a simulation!");
+        //Alert.alert("End of simulation!", "Your data would go to the database if this was not a simulation!");
+        DatabaseManager.updateReports(LocalDataManager, itemNameData, itemDescData, itemNameColorData, areaDescData, categoryData, countyData);
         navigation.replace("Home Page");
     }
 

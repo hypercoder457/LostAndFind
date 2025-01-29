@@ -104,18 +104,18 @@ const counties = [
   "Yadkin",
   "Yancey",
 ];
-  const categories = ["Clothing", "Bag", "Electronic", "Key", "Wallet", "Jewelry", "Bottle", "Book", "Important Documentation", "Other"];
+const categories = ["Clothing", "Bag", "Electronic", "Key", "Wallet", "Jewelry", "Bottle", "Book", "Important Documentation", "Other"];
 const totalCounties = counties.length;
 const totalCategories = categories.length;
 const mainPath = "reports/";
 for (let i = 0; i < totalCounties; i++) {
-    const currentCounty = counties[i];
-    for (let j = 0; j < totalCategories; j++) {
-        const currentCategory = categories[j];
-        const usePath = mainPath + currentCounty + "/" + currentCategory; 
-        const newRef = ref(db, usePath);
-        set(newRef, "");
-    }
+  const currentCounty = counties[i];
+  for (let j = 0; j < totalCategories; j++) {
+    const currentCategory = categories[j];
+    const usePath = mainPath + currentCounty + "/" + currentCategory;
+    const newRef = ref(db, usePath);
+    set(newRef, "");
+  }
 }
 console.log("Finished Creating Database Structure!");
 /*

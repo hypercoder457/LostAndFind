@@ -25,6 +25,10 @@ export default class LocalDataManager {
         });
     }
     static updateUserData(key, value) {
+        if (!this.dataLoaded) {
+            console.warn("User data has not loaded and thus can't be updated right now!");
+            return;
+        }
         if (typeof (key) != "string" || typeof (value) != "string") {
             console.warn("Unable to update user data because key/value is not a string!");
             return;
@@ -34,7 +38,6 @@ export default class LocalDataManager {
             return;
         }
         this.userData[key] = value;
-        this.dataLoaded = true;
     }
     static async saveUserData() {
         if (!this.dataLoaded) {
@@ -43,7 +46,7 @@ export default class LocalDataManager {
         }
         try {
             for (let key in this.userData) {
-                await AsyncStorage.setItem(toString(key), this.userData[key]);
+                await AsyncStorage.setItem(key, this.userData[key]);
             }
         } catch (err) {
             console.warn("Unable to save user data! Error:" + err);
@@ -57,7 +60,7 @@ export default class LocalDataManager {
         while (!this.dataLoaded) {
             try {
                 for (let key in this.userData) {
-                    const valueData = await AsyncStorage.getItem(toString(key));
+                    const valueData = await AsyncStorage.getItem(key);
                     if (valueData !== null) {
                         this.userData[key] = valueData;
                     }

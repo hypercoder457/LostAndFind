@@ -84,8 +84,38 @@ export default function ReportAnItem(props) {
                 LocalDataManager.saveUserData();
             }
         }
-        //Alert.alert("End of simulation!", "Your data would go to the database if this was not a simulation!");
-        DatabaseManager.updateReports(LocalDataManager, itemNameData, itemDescData, itemNameColorData, areaDescData, categoryData, countyData);
+
+        let locationData = manualAddressData;
+        if (useAuto) {
+             locationData = locationAddress.name + " " + locationAddress.district + " " + locationAddress.city + " " + locationAddress.postalCode;
+        }
+        
+        const useImageData = [];
+        const totalImages = imageData.length;
+        for (let i = 0; i < totalImages; i++) {
+            useImageData.push(toString(imageData[i].uri));
+        }
+
+        console.log(LocalDataManager.userData);
+        const reportEntry = {
+            fName: LocalDataManager.userData.firstName,
+            lName: LocalDataManager.userData.lastName,
+            userId: LocalDataManager.userData.userId,
+
+            county: countyData,
+            category: categoryData,
+
+            itemName: itemNameData,
+            itemDescription: itemDescData,
+
+            areaDescription: areaDescData,
+            areaLocation: locationData,
+
+            primaryImageIndex: primaryImage,
+            images: useImageData,
+        };
+
+        DatabaseManager.makeReport(reportEntry);
         navigation.replace("Home Page");
     }
 
@@ -108,7 +138,6 @@ export default function ReportAnItem(props) {
                 if (imageData.length < 3) {
                     const totalPhotos = photos.assets.length;
                     for (let i = 0; i < totalPhotos; i++) {
-                        console.log("Index: " + i);
                         setImageData((oldImageData) => {
                             const updatedImageData = [...oldImageData, photos.assets[i]];
                             handleImageInserter(updatedImageData.length);

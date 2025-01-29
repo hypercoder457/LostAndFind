@@ -4,7 +4,6 @@ import _ from "lodash";
 
 export default class DatabaseManager {
     static db = getDatabase(getFirebaseApp());
-    static reportsUpdatedByUser = 0;
     static async generateUserKey(LocalDataManager) {
         console.log(LocalDataManager.userData.userId);
         if (LocalDataManager.userData.userId === "") {
@@ -17,19 +16,20 @@ export default class DatabaseManager {
         }
     }
 
-    static updateReports(LocalDataManager, itemName, itemDesc, itemColor, areaDesc, category, county) {
-        this.reportsUpdatedByUser++;
-        const properCounty = _.startCase(county);
-        const properCategory = _.startCase(category);
-        const categoryRef = ref(this.db, `reports/${properCounty}/${properCategory}`);
-        const reportEntry = push(categoryRef);
+    static makeReport(reportTicket) {
+        const mainPath = `reports/${reportTicket.county}/${reportTicket.category}`;
+        const reportRef = ref(this.db, mainPath);
+        const reportEntry = push(reportRef);
         const reportKey = reportEntry.key;
-        set(reportEntry, { itemName: itemName, itemDesc: itemDesc, itemColor: itemColor, areaDesc: areaDesc, category: category, county: county, });
-        const reportsRef = ref(this.db, `users/${LocalDataManager.userData.userId}/reports`);
-        update(reportsRef, { [this.reportsUpdatedByUser]: reportKey });
-    }
+        set(reportEntry, reportTicket);
 
-    static getReports() { }
+        console.log(reportTicket);
+
+        const userPath = `users/${reportTicket.userId}/reports`;
+        const userReportsRef = ref(this.db, userPath);
+        const userReportsEntry = push(userReportsRef );
+        set(userReportsEntry, mainPath+`/${reportKey}`);
+    }
 };
 
 // when user logs in function to push the user to the database. needs to get the key and store it in the local DB manager class above. - Login.js file

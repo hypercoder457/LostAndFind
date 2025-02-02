@@ -78,13 +78,13 @@ export default function ReportAnItem(props) {
 
         let locationData = manualAddressData;
         if (useAuto) {
-             locationData = locationAddress.name + " " + locationAddress.district + " " + locationAddress.city + " " + locationAddress.postalCode;
+            locationData = locationAddress.name + " " + locationAddress.district + " " + locationAddress.city + " " + locationAddress.postalCode;
         }
-        
+
         const useImageData = [];
         const totalImages = imageData.length;
         let missingImage = false;
-        for (let i = totalImages -1; i >= 0; i--) {
+        for (let i = totalImages - 1; i >= 0; i--) {
             const pictureInfo = await FileSystem.getInfoAsync(imageData[i].uri);
             if (pictureInfo.exists) {
                 useImageData.push(imageData[i].uri);
@@ -211,103 +211,106 @@ export default function ReportAnItem(props) {
     }
 
     return (
-        <SafeAreaView>
-            <ScrollView>
-                <Text>Name</Text>
-                <TextInput
-                    placeholder="Item Name"
-                    value={itemNameData}
-                    onChangeText={(text) => {
-                        setItemName(text);
-                        setItemColor("rgb(0, 0, 0)");
-                    }}
-                    onBlur={() => { (isEmpty(itemNameData, minNameLength) ? setItemColor("rgb(255, 0, 0)") : setItemColor("rgb(0, 255, 0)")) }}
-                    style={{ color: itemNameColorData }}
-                />
+        <View style={{backgroundColor: "rgb(173, 215, 160)"}}>
+            <SafeAreaView style={{backgroundColor: "rgb(60, 255, 0)", alignItems: "center"}}>
+                <Text style={{fontSize: "25"}}>Report</Text>
+                <ScrollView style={{width: "100%", backgroundColor: "rgb(203, 255, 187)"}}>
+                    <Text>Name</Text>
+                    <TextInput
+                        placeholder="Item Name"
+                        value={itemNameData}
+                        onChangeText={(text) => {
+                            setItemName(text);
+                            setItemColor("rgb(0, 0, 0)");
+                        }}
+                        onBlur={() => { (isEmpty(itemNameData, minNameLength) ? setItemColor("rgb(255, 0, 0)") : setItemColor("rgb(0, 255, 0)")) }}
+                        style={{ color: itemNameColorData }}
+                    />
 
-                <Text>Category</Text>
-                <SelectList
-                    search={false}
-                    data={DatabaseKeys.categories}
-                    setSelected={setCategory}
-                    save='value'
-                    dropdownStyles={{ zIndex: 999, position: "absolute", top: 40, marginLegt: 20, marginRight: 20 }}
-                />
+                    <Text>Category</Text>
+                    <SelectList
+                        search={false}
+                        data={DatabaseKeys.categories}
+                        setSelected={setCategory}
+                        save='value'
+                        dropdownStyles={{ zIndex: 999, position: "absolute", top: 40, marginLegt: 20, marginRight: 20 }}
+                    />
 
-                <Text>Images</Text>
-                <ScrollView ref={imageDisplayer} style={{ display: "flex", backgroundColor: "rgb(255, 0, 0)" }} horizontal>
-                    {imageData.map((picture, index) => (
-                        <Pressable key={index}>
-                            <Image source={{ uri: picture.uri }} style={styles.picture}></Image>
-                            <Pressable onPress={() => { removeImegeFromPage(index) }}>
-                                <Text style={styles.pictureRemove}>Remove</Text>
+                    <Text>Images</Text>
+                    <ScrollView ref={imageDisplayer} style={{ display: "flex", backgroundColor: "rgb(255, 0, 0)" }} horizontal>
+                        {imageData.map((picture, index) => (
+                            <Pressable key={index}>
+                                <Image source={{ uri: picture.uri }} style={styles.picture}></Image>
+                                <Pressable onPress={() => { removeImegeFromPage(index) }}>
+                                    <Text style={styles.pictureRemove}>Remove</Text>
+                                </Pressable>
+                                <Pressable onPress={() => { makeImagePrimary(index) }}>
+                                    <Image source={(index == primaryImage ? require("../assets/starIcon.png") : require("../assets/unStarIcon.png"))} style={styles.picturePrimary}></Image>
+                                </Pressable>
+                                <Text style={styles.pictureNumber}>{index + 1}/3</Text>
                             </Pressable>
-                            <Pressable onPress={() => { makeImagePrimary(index) }}>
-                                <Image source={(index == primaryImage ? require("../assets/starIcon.png") : require("../assets/unStarIcon.png"))} style={styles.picturePrimary}></Image>
-                            </Pressable>
-                            <Text style={styles.pictureNumber}>{index + 1}/3</Text>
+                        ))}
+                        <Pressable ref={imageInserter} style={{ backgroundColor: "rgb(0, 255, 47)", display: (imageInserterVisible ? "flex" : "none") }} onPress={() => { addImagesToPage() }}>
+                            <Image source={require("../assets/plusIcon.png")} style={styles.picture} />
                         </Pressable>
-                    ))}
-                    <Pressable ref={imageInserter} style={{ backgroundColor: "rgb(0, 255, 47)", display: (imageInserterVisible ? "flex" : "none") }} onPress={() => { addImagesToPage() }}>
-                        <Image source={require("../assets/plusIcon.png")} style={styles.picture} />
-                    </Pressable>
-                </ScrollView>
+                    </ScrollView>
 
-                <Text>Description</Text>
-                <TextInput
-                    placeholder="Description"
-                    value={itemDescData}
-                    onChangeText={(text) => { setItemDesc(text) }}
-                />
+                    <Text>Description</Text>
+                    <TextInput
+                        placeholder="Description"
+                        value={itemDescData}
+                        onChangeText={(text) => { setItemDesc(text) }}
+                    />
 
-                <Text>County</Text>
-                <SelectList
-                    search={true}
-                    searchPlaceholder="Can't find the county? Search for it here!"
-                    notFoundText="That county does not exist!"
-                    data={DatabaseKeys.counties}
-                    setSelected={setCounty}
-                    save='value'
-                    dropdownStyles={{ zIndex: 999, position: "absolute", top: 40, marginLegt: 20, marginRight: 20 }}
-                />
+                    <Text>County</Text>
+                    <SelectList
+                        search={true}
+                        searchPlaceholder="Can't find the county? Search for it here!"
+                        notFoundText="That county does not exist!"
+                        data={DatabaseKeys.counties}
+                        setSelected={setCounty}
+                        save='value'
+                        dropdownStyles={{ zIndex: 999, position: "absolute", top: 40, marginLegt: 20, marginRight: 20 }}
+                    />
 
-                <Text>Area Description</Text>
-                <TextInput
-                    placeholder="Area Description"
-                    value={areaDescData}
-                    onChangeText={(text) => { setAreaDesc(text) }}
-                />
+                    <Text>Area Description</Text>
+                    <TextInput
+                        placeholder="Area Description"
+                        value={areaDescData}
+                        onChangeText={(text) => { setAreaDesc(text) }}
+                    />
 
-                <Text>Location</Text>
-                <View>
-                    <Text>Use current location</Text>
-                    <Checkbox value={useAuto} onValueChange={() => { getCurrentLocation() }} />
-                    <View style={{ display: (useAuto ? "none" : "flex") }}>
-                        <Text>Input location manually</Text>
-                        <TextInput
-                            placeholder="Location"
-                            value={manualAddressData}
-                            onChangeText={(text) => { setManualAddressData(text) }}
-                            onBlur={() => { (isEmpty(manualAddressData, minLocationLength) ? setMADColor("rgb(255, 0, 0)") : setMADColor("rgb(0, 255, 0)")) }}
-                            style={{ color: MADColor }}
-                        />
+                    <Text>Location</Text>
+                    <View>
+                        <Text>Use current location</Text>
+                        <Checkbox value={useAuto} onValueChange={() => { getCurrentLocation() }} />
+                        <View style={{ display: (useAuto ? "none" : "flex") }}>
+                            <Text>Input location manually</Text>
+                            <TextInput
+                                placeholder="Location"
+                                value={manualAddressData}
+                                onChangeText={(text) => { setManualAddressData(text) }}
+                                onBlur={() => { (isEmpty(manualAddressData, minLocationLength) ? setMADColor("rgb(255, 0, 0)") : setMADColor("rgb(0, 255, 0)")) }}
+                                style={{ color: MADColor }}
+                            />
+                        </View>
                     </View>
-                </View>
 
-                <TouchableHighlight onPress={() => { checkForCompletion() }}>
-                    <Text style={{ backgroundColor: "rgb(125, 125, 125)", height: 100 }}>
-                        Submit report
-                    </Text>
-                </TouchableHighlight>
-            </ScrollView>
-        </SafeAreaView>
+                    <TouchableHighlight onPress={() => { checkForCompletion() }}>
+                        <Text style={{ backgroundColor: "rgb(125, 125, 125)", height: 100 }}>
+                            Submit report
+                        </Text>
+                    </TouchableHighlight>
+                </ScrollView>
+            </SafeAreaView>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
     picture: {
         width: windowDimensions.width * 0.9,
-        height: windowDimensions.width * 0.9
+        height: windowDimensions.width * 0.9,
     },
     pictureNumber: {
         borderWidth: 1,

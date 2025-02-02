@@ -31,7 +31,7 @@ export default function HomeScreen(props) {
                 <Text style={{ fontSize: 50 }}>Lost & Find</Text>
             </View>
             <View style={{ backgroundColor: "rgb(121, 157, 150)", display: "flex", alignItems: "center", justifyItems: "center", borderRadius: 5 }}>
-                <Pressable style={styles.mainOptionIcon} onPress={() => {console.log("Unfinished!")}}>
+                <Pressable style={styles.mainOptionIcon} onPress={() => {navigation.replace("Recover An Item");}}>
                     <Image source={require("../assets/searchIcon.png")} style={styles.icon} />
                     <Text style={styles.textWithIcon}>Recover</Text>
                 </Pressable>

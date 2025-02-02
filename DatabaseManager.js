@@ -1,8 +1,8 @@
-import { getDatabase, ref, set, push } from "firebase/database";
+import { getDatabase, ref, set, push, get } from "firebase/database";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 import * as FileSystem from 'expo-file-system';
 import { app, storage } from "./firebaseConfig.js";
-import _ from "lodash";
+import _, { reduce } from "lodash";
 
 export default class DatabaseManager {
   static db = getDatabase(app);
@@ -19,17 +19,26 @@ export default class DatabaseManager {
     }
   }
 
+  static async getDataSection(sectionPath) {
+    try {
+      const sectionRef = ref(this.db, sectionPath);
+      const snapShot = await get(sectionRef);
+      return(snapShot.val());
+    } catch (err) {
+      return(null);
+    }
+  }
+
   static async makeReport(reportTicket) {
     const madeURLs = await this.makeImages(reportTicket.images);
 
     if (!madeURLs) {
-      return false; // if there was an issue processing images
+      return(false);
     }
 
-    // Here you can save the report with the image URLs to the database
     const reportData = {
       ...reportTicket,
-      images: madeURLs, // attach the image URLs to the report
+      images: madeURLs,
     };
 
     const mainPath = `reports/${reportTicket.county}/${reportTicket.category}`;
@@ -38,56 +47,48 @@ export default class DatabaseManager {
     const reportKey = reportEntry.key;
     set(reportEntry, reportData);
 
-    // Optionally, also link the report to the user's report list
     const userPath = `users/${reportTicket.userId}/reports`;
     const userReportsRef = ref(this.db, userPath);
     const userReportsEntry = push(userReportsRef);
     set(userReportsEntry, `${mainPath}/${reportKey}`);
 
     console.log("Report uploaded successfully!");
-    return true;
+    return(true);
   }
 
   static async makeImages(images) {
-    if (!images || images.length === 0) {
-      console.log("No images provided.");
-      return [];
+    if (!images || images.length <= 0) {
+      return(false);
     }
   
     const uploadPromises = images.map(async (uri) => {
       try {
-        // Step 1: Get the file info (size, type) and convert the URI into a Blob
         const fileInfo = await FileSystem.getInfoAsync(uri);
         if (fileInfo.exists) {
           const { uri: fileUri } = fileInfo;
-  
-          // Step 2: Convert the image file to a Blob
+
           const response = await fetch(fileUri);
           const blob = await response.blob();
-  
-          // Step 3: Upload the Blob to Firebase Storage
+
           const storage = getStorage();
           const storagePath = `report_images/${new Date().toISOString()}_${Math.random().toString(36).substr(2, 9)}.jpg`; // Unique file name
           const imageRef = storageRef(storage, storagePath);
           await uploadBytes(imageRef, blob);
   
-          // Step 4: Get the download URL from Firebase Storage
           const downloadURL = await getDownloadURL(imageRef);
   
-          return downloadURL; // Return the image URL
+          return(downloadURL);
         } else {
-          throw new Error("File does not exist at URI");
+          console.warn("File does not exist at URI");
         }
-      } catch (error) {
-        console.error("Error uploading image: ", error);
-        return null;
+      } catch (err) {
+        console.log("Error uploading image!: ", err);
+        return(null);
       }
     });
-  
-    // Wait for all image uploads to complete and return the URLs
+
     const imageURLs = await Promise.all(uploadPromises);
-  
-    // Filter out any null values (failed uploads)
-    return imageURLs.filter((url) => url !== null);
+
+    return imageURLs.filter((url) => url != null);
   }
 }

@@ -5,6 +5,8 @@ import LoadingScreen from './screens/LoadingScreen';
 import LogInScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import ReportAnItemScreen from './screens/ReportAnItemScreen';
+import RecoverScreen from './screens/RecoverScreen';
+import ItemInfoScreen from './screens/ItemInfoScreen';
 
 export default function App() {
   //Initial Setup
@@ -37,6 +39,18 @@ export default function App() {
       },
       "Report An Item": {
         screen: ReportAnItemScreen,
+        options: {
+          headerShown: false,
+        },
+      },
+      "Recover An Item": {
+        screen: RecoverScreen,
+        options: {
+          headerShown: false,
+        },
+      },
+      "Item Info Screen": {
+        screen: ItemInfoScreen,
         options: {
           headerShown: false,
         },

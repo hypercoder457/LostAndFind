@@ -104,7 +104,18 @@ const counties = [
   "Yadkin",
   "Yancey",
 ];
-const categories = ["Clothing", "Bag", "Electronic", "Key", "Wallet", "Jewelry", "Bottle", "Book", "Important Documentation", "Other"];
+const categories = [
+  "Bag", 
+  "Book", 
+  "Bottle", 
+  "Clothing", 
+  "Electronic",
+  "Glasses",
+  "Important Documentation", 
+  "Jewelry", 
+  "Key",
+  "Wallet",
+  "Other"];
 const totalCounties = counties.length;
 const totalCategories = categories.length;
 const mainPath = "reports/";

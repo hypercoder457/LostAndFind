@@ -132,14 +132,13 @@ export default function ReportAnItem(props) {
             images: useImageData,
         };
 
-        DatabaseManager.makeReport(reportEntry);
-        // const results = await DatabaseManager.makeReport(reportEntry);
-        // if (results) {
-        //     navigation.replace("Home Page");
-        // } else {
-        //     Alert.alert("Error", "Unable to submit ticket! Please try again!");
-        //     return;
-        // }
+        const results = await DatabaseManager.makeReport(reportEntry);
+        if (results) {
+            navigation.replace("Home Page");
+        } else {
+            Alert.alert("Error", "Unable to submit ticket! Please try again!");
+            return;
+        }
     }
 
     function handleImageInserter(useLength) {

@@ -3,6 +3,7 @@ import Checkbox from 'expo-checkbox';
 import { useNavigation } from "@react-navigation/native";
 import { Image, Dimensions, ScrollView, TouchableHighlight, View, TextInput, StyleSheet, Text, Pressable, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import * as FileSystem from "expo-file-system";
 import { SelectList } from 'react-native-dropdown-select-list';
 
 import CameraManager from "../CameraManager";
@@ -46,7 +47,7 @@ export default function ReportAnItem(props) {
         return (!(/[a-zA-Z]/.test(text)) || text.length <= minLength);
     }
 
-    function checkForCompletion() {
+    async function checkForCompletion() {
         if (isEmpty(itemNameData, minNameLength)) {
             Alert.alert(incompleteTicketTitle, "Please insert a valid item name!");
             return;
@@ -75,16 +76,6 @@ export default function ReportAnItem(props) {
             }
         }
 
-        if (LocalDataManager.dataLoaded) {
-            if ("tBNP" in LocalDataManager.userData) {
-                const currentDate = new Date();
-                const futureTime = parseInt(currentDate.getTime()) + 30000;
-                const stringFutureTime = futureTime.toString();
-                LocalDataManager.updateUserData("tBNP", stringFutureTime);
-                LocalDataManager.saveUserData();
-            }
-        }
-
         let locationData = manualAddressData;
         if (useAuto) {
              locationData = locationAddress.name + " " + locationAddress.district + " " + locationAddress.city + " " + locationAddress.postalCode;
@@ -92,11 +83,37 @@ export default function ReportAnItem(props) {
         
         const useImageData = [];
         const totalImages = imageData.length;
-        for (let i = 0; i < totalImages; i++) {
-            useImageData.push(toString(imageData[i].uri));
+        let missingImage = false;
+        for (let i = totalImages -1; i >= 0; i--) {
+            const pictureInfo = await FileSystem.getInfoAsync(imageData[i].uri);
+            if (pictureInfo.exists) {
+                useImageData.push(imageData[i].uri);
+            } else {
+                removeImegeFromPage(i);
+                missingImage = true;
+            };
+        }
+        if (missingImage) {
+            Alert.alert("Missing File(s)", "Unable to submit ticket because one or more of your images was deleted!");
+            return;
         }
 
-        console.log(LocalDataManager.userData);
+        if (LocalDataManager.dataLoaded) {
+            if ("tBNP" in LocalDataManager.userData) {
+                const currentDate = new Date();
+                const futureTime = parseInt(currentDate.getTime()) + 30000;
+                const stringFutureTime = futureTime.toString();
+                LocalDataManager.updateUserData("tBNP", stringFutureTime);
+                LocalDataManager.saveUserData();
+            } else {
+                Alert.alert("Malformed Data", "Unable to submit ticket because your local data is malformed!");
+                return;
+            }
+        } else {
+            Alert.alert("Error", "Your local data has not loaded yet!");
+            return;
+        }
+
         const reportEntry = {
             fName: LocalDataManager.userData.firstName,
             lName: LocalDataManager.userData.lastName,
@@ -116,7 +133,13 @@ export default function ReportAnItem(props) {
         };
 
         DatabaseManager.makeReport(reportEntry);
-        navigation.replace("Home Page");
+        // const results = await DatabaseManager.makeReport(reportEntry);
+        // if (results) {
+        //     navigation.replace("Home Page");
+        // } else {
+        //     Alert.alert("Error", "Unable to submit ticket! Please try again!");
+        //     return;
+        // }
     }
 
     function handleImageInserter(useLength) {

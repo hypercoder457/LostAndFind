@@ -30,3 +30,12 @@ const styles = StyleSheet.create({
     textWithIcon: { fontSize: 35 },
 });
 export default styles;
+
+// All colors for theme
+/*
+#FBFCFC
+#D2E4DE
+#2CC9CE
+#C8DEE0
+#1DAEE8
+*/

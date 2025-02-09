@@ -7,6 +7,8 @@ export default class LocalDataManager {
         firstName: "",
         lastName: "",
         tBNP: "0", // Time Before Next Post
+        tBNF: "0", // Time Before Next Find
+        foundReports: [],
         userId: "",
     };
     static async waitUntilUserDataLoaded() {
@@ -37,7 +39,11 @@ export default class LocalDataManager {
             console.warn("Unable to update user data because key is not a valid key entry!");
             return;
         }
-        this.userData[key] = value;
+        if (typeof(this.userData[key]) == "string") {
+            this.userData[key] = value;
+        } else if (typeof(this.userData[key]) == "object") {
+            this.userData[key].push(value);
+        }
     }
     static async saveUserData() {
         if (!this.dataLoaded) {
@@ -46,7 +52,16 @@ export default class LocalDataManager {
         }
         try {
             for (let key in this.userData) {
-                await AsyncStorage.setItem(key, this.userData[key]);
+                if (typeof(this.userData[key]) == "string") {
+                    await AsyncStorage.setItem(key, this.userData[key]);
+                } else if (typeof(this.userData[key]) == "object") {
+                    let stringifiedData = "~";
+                    const dataLength = this.userData[key].length;
+                    for (let i = 0; i < dataLength; i++) {
+                        stringifiedData += this.userData[key][i] + (i+1 >= dataLength ? "" : ",");
+                    }
+                    await AsyncStorage.setItem(key, stringifiedData);
+                }
             }
         } catch (err) {
             console.warn("Unable to save user data! Error:" + err);
@@ -62,7 +77,13 @@ export default class LocalDataManager {
                 for (let key in this.userData) {
                     const valueData = await AsyncStorage.getItem(key);
                     if (valueData !== null) {
-                        this.userData[key] = valueData;
+                        if (valueData[0] && valueData[0] == "~") {
+                            console.log(valueData)
+                            let tempValueData = valueData.slice(1, valueData.length);
+                            this.userData[key] = tempValueData.split(",");
+                        } else {
+                            this.userData[key] = valueData;
+                        }
                     }
                 }
                 this.dataLoaded = true;

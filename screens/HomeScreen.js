@@ -19,7 +19,7 @@ export default function HomeScreen(props) {
                     const secondsLeft = Math.ceil((tBNP - currentTime) * 0.001);
                     Alert.alert("Notice", "You can report another missing item in "+secondsLeft+" seconds!");
                 } else {
-                    navigation.replace("Report An Item");
+                    navigation.navigate("Report An Item");
                 }
             }
         }
@@ -31,7 +31,7 @@ export default function HomeScreen(props) {
                 <Text style={{ fontSize: 50 }}>Lost & Find</Text>
             </View>
             <View style={{ backgroundColor: "rgb(121, 157, 150)", display: "flex", alignItems: "center", justifyItems: "center", borderRadius: 5 }}>
-                <Pressable style={styles.mainOptionIcon} onPress={() => {navigation.replace("Recover An Item");}}>
+                <Pressable style={styles.mainOptionIcon} onPress={() => {navigation.navigate("Recover An Item");}}>
                     <Image source={require("../assets/searchIcon.png")} style={styles.icon} />
                     <Text style={styles.textWithIcon}>Recover</Text>
                 </Pressable>

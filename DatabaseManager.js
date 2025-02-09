@@ -1,8 +1,8 @@
-import { getDatabase, ref, set, push, get } from "firebase/database";
+import { getDatabase, ref, set, push, get, remove  } from "firebase/database";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 import * as FileSystem from 'expo-file-system';
 import { app, storage } from "./firebaseConfig.js";
-import _, { reduce } from "lodash";
+
 
 export default class DatabaseManager {
   static db = getDatabase(app);
@@ -19,13 +19,40 @@ export default class DatabaseManager {
     }
   }
 
+  static async hasEntry(pathEntry) {
+    const entryData = ref(this.db, pathEntry);
+    const snapShot = await get(entryData);
+    return(snapShot.exists())
+  }
+
+  static async reduceExperationTime(pathEntry, newExperation) {
+    const experationData = ref(this.db, pathEntry);
+    await set(experationData, newExperation);
+  }
+
+  static async deleteEntry(path, entry) {
+    try {
+      const parentEntry = ref(this.db, path);
+      const snapShot = await get(parentEntry);
+      if (snapShot.exists()) {
+        if (Object.keys(snapShot.val()).length <= 1) {
+          await set(parentEntry, "");
+        }
+      }
+      const entryRef = ref(this.db, (path+entry));
+      await remove(entryRef);
+    } catch (err) {
+     return;
+    }
+  }
+
   static async getDataSection(sectionPath) {
     try {
       const sectionRef = ref(this.db, sectionPath);
       const snapShot = await get(sectionRef);
       return(snapShot.val());
     } catch (err) {
-      return(null);
+      return;
     }
   }
 

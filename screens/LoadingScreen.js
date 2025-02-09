@@ -9,6 +9,7 @@ import styles from "../styles";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoadingScreen() {
+    //AsyncStorage.clear();
     LocalDataManager.loadUserData();
     CameraManager.checkPermission();
     LocationManager.checkPermission();

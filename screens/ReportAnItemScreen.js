@@ -16,7 +16,7 @@ const windowDimensions = Dimensions.get('window');
 
 const incompleteTicketTitle = "Ticket incomplete";
 const minNameLength = 3;
-const maxNameLength = 50;
+const maxNameLength = 30;
 const minLocationLength = 10;
 const maxLocationLength = 125;
 const maxItemDescriptionLength = 125;
@@ -159,9 +159,9 @@ export default function ReportAnItem(props) {
             return;
         }
 
+        const currentDate = new Date();
         if (LocalDataManager.dataLoaded) {
             if ("tBNP" in LocalDataManager.userData) {
-                const currentDate = new Date();
                 const futureTime = parseInt(currentDate.getTime()) + 30000;
                 const stringFutureTime = futureTime.toString();
                 LocalDataManager.updateUserData("tBNP", stringFutureTime);
@@ -178,6 +178,8 @@ export default function ReportAnItem(props) {
         }
 
         setReportingTicket(true);
+
+        const experationDate = parseInt(currentDate.getTime()) + 2419200000;
         const reportEntry = {
             fName: LocalDataManager.userData.firstName,
             lName: LocalDataManager.userData.lastName,
@@ -194,6 +196,8 @@ export default function ReportAnItem(props) {
 
             primaryImageIndex: primaryImage,
             images: useImageData,
+
+            experationDate: experationDate,
         };
 
         const results = await DatabaseManager.makeReport(reportEntry);
@@ -313,8 +317,8 @@ export default function ReportAnItem(props) {
                     </View>
                         
                     <View ref={imagesRef} style={{ alignItems: "center", position: "relative", top: "4.5%" }}>
-                        <Text style={{fontSize: "34"}}>Item image(s)</Text>
-                        <ScrollView ref={imageDisplayer} style={{ display: "flex"}} horizontal showsHorizontalScrollIndicator={false}>
+                        <Text style={{fontSize: "34"}}>{`Item image${(imageData.length > 1 ? "s" : "")}`}</Text>
+                        <ScrollView bounces={false} ref={imageDisplayer} style={{ display: "flex"}} horizontal showsHorizontalScrollIndicator={false}>
                             {imageData.map((picture, index) => (
                                 <Pressable key={index}>
                                     <Image source={{ uri: picture.uri }} style={styles.picture}></Image>
@@ -410,6 +414,10 @@ export default function ReportAnItem(props) {
                     </View>
 
                 </ScrollView>
+                <Pressable style={{ position: "absolute", bottom: "5%", left: "5%", width: "50", height: "50" }}
+                    onPress={() => { navigation.goBack() }}>
+                    <Image style={{ width: "50", height: "50" }} source={require("../assets/backIcon.png")}></Image>
+                </Pressable>
             </View>
         </View>
     )

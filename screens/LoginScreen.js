@@ -51,7 +51,7 @@ export default function Login(props) {
     return (
         <View>
             <View style={{ height: "10%", width: "100%", backgroundColor: "rgb(0, 175, 229)", display: "flex", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
-                <Text style={{ fontSize: "40", position: "absolute", bottom: "5%" }}>Make an account</Text>
+                <Text style={{ fontSize: "40", position: "absolute", bottom: "5%" }}>Make an Account</Text>
             </View>
             <View style={{ height: "90%", backgroundColor: "rgb(96, 218, 255)" }}>
                 <ScrollView ref={scrollViewRef} style={{height: "200%",width: "100%"}} bounces={false}>

@@ -39,7 +39,7 @@ export default function HomeScreen(props) {
                     <Image source={require("../assets/cameraIcon.png")} style={styles.icon} />
                     <Text style={styles.textWithIcon}>Report</Text>
                 </Pressable>
-                <Pressable style={styles.mainOptionIcon} onPress={() => {console.log("Unfinished!")}}>
+                <Pressable style={styles.mainOptionIcon} onPress={() => {navigation.navigate("Edit Screen");}}>
                     <Image source={require("../assets/editIcon.png")} style={styles.icon} />
                     <Text style={styles.textWithIcon}>Edit</Text>
                 </Pressable>

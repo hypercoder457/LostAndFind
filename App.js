@@ -7,6 +7,7 @@ import HomeScreen from './screens/HomeScreen';
 import ReportAnItemScreen from './screens/ReportAnItemScreen';
 import RecoverScreen from './screens/RecoverScreen';
 import ItemInfoScreen from './screens/ItemInfoScreen';
+import EditScreen from './screens/EditScreen';
 
 export default function App() {
   //Initial Setup
@@ -51,6 +52,12 @@ export default function App() {
       },
       "Item Info Screen": {
         screen: ItemInfoScreen,
+        options: {
+          headerShown: false,
+        },
+      },
+      "Edit Screen": {
+        screen: EditScreen,
         options: {
           headerShown: false,
         },

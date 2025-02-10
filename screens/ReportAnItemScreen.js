@@ -282,14 +282,14 @@ export default function ReportAnItem(props) {
     return (
         <View>
             <View style={{ height: "10%", width: "100%", backgroundColor: "rgb(0, 175, 229)", display: "flex", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
-                <Text style={{ fontSize: "40", position: "absolute", bottom: "5%" }}>Report an item</Text>
+                <Text style={{ fontSize: "40", position: "absolute", bottom: "5%" }}>Report an Item</Text>
             </View>
             <View style={{ height: "90%", backgroundColor: "rgb(96, 218, 255)" }}>
                 <ScrollView ref={scrollViewRef} style={{ height: "100%", width: "100%", flexGrow: 1 }} bounces={false}>
                     <View ref={itemNameRef} style={{ alignItems: "center", position: "relative", top: "1.5%" }}>
-                        <Text style={{fontSize: "34"}}>Item name</Text>
+                        <Text style={{fontSize: "34"}}>Item Name</Text>
                         <TextInput
-                            placeholder="Item name"
+                            placeholder="Item Name"
                             value={itemNameData}
                             onChangeText={(text) => {
                                 setItemName(text);
@@ -301,7 +301,7 @@ export default function ReportAnItem(props) {
                     </View>
 
                     <View ref={itemCategoryRef} style={{ alignItems: "center", position: "relative", top: "3%" }}>
-                        <Text style={{fontSize: "34"}}>Item category</Text>
+                        <Text style={{fontSize: "34"}}>Item Category</Text>
                         <SelectList
                             search={false}
                             data={DatabaseKeys.categories}
@@ -317,7 +317,7 @@ export default function ReportAnItem(props) {
                     </View>
                         
                     <View ref={imagesRef} style={{ alignItems: "center", position: "relative", top: "4.5%" }}>
-                        <Text style={{fontSize: "34"}}>{`Item image${(imageData.length > 1 ? "s" : "")}`}</Text>
+                        <Text style={{fontSize: "34"}}>{`Item Image${(imageData.length > 1 ? "s" : "")}`}</Text>
                         <ScrollView bounces={false} ref={imageDisplayer} style={{ display: "flex"}} horizontal showsHorizontalScrollIndicator={false}>
                             {imageData.map((picture, index) => (
                                 <Pressable key={index}>
@@ -339,11 +339,11 @@ export default function ReportAnItem(props) {
                     </View> 
 
                     <View ref={itemDescriptionRef} style={{ alignItems: "center", position: "relative", top: "6%" }}>
-                        <Text style={{fontSize: "34"}}>Item description</Text>
+                        <Text style={{fontSize: "34"}}>Item Description</Text>
                         <TextInput
                             multiline={true}
                             style={{ height: "100", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: "25", borderColor: "rgb(74, 179, 211)", borderWidth: "2", textAlign: "center", borderRadius: 10 }}
-                            placeholder="Item description"
+                            placeholder="Item Description"
                             value={itemDescData}
                             onChangeText={(text) => { setItemDesc(text) }}
                         />
@@ -369,11 +369,11 @@ export default function ReportAnItem(props) {
                     </View>
 
                     <View ref={areaDescriptionRef} style={{ alignItems: "center", position: "relative", top: "9%" }}>
-                        <Text style={{fontSize: "34"}}>Area description</Text>
+                        <Text style={{fontSize: "34"}}>Area Description</Text>
                         <TextInput
                             multiline={true}
                             style={{ height: "100", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: "25", borderColor: "rgb(74, 179, 211)", borderWidth: "2", textAlign: "center", borderRadius: 10 }}
-                            placeholder="Area description"
+                            placeholder="Area Description"
                             value={areaDescData}
                             onChangeText={(text) => { setAreaDesc(text) }}
                         />

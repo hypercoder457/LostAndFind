@@ -313,12 +313,12 @@ export default function ReportAnItem(info) {
     return (
         <View>
             <View style={{ height: "10%", width: "100%", backgroundColor: "rgb(0, 175, 229)", display: "flex", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
-                <Text style={{ fontSize: "40", position: "absolute", bottom: "5%" }}>{(!editEntryData ? "Report an Item" : "Edit a Report")}</Text>
+                <Text style={{ fontSize: 40, position: "absolute", bottom: "5%" }}>{(!editEntryData ? "Report an Item" : "Edit a Report")}</Text>
             </View>
             <View style={{ height: "90%", backgroundColor: "rgb(96, 218, 255)" }}>
                 <ScrollView ref={scrollViewRef} style={{ height: "100%", width: "100%", flexGrow: 1 }} bounces={false}>
                     <View style={{ alignItems: "center", position: "relative", top: "1.5%" }}>
-                        <Text style={{fontSize: "34"}}>Item Name</Text>
+                        <Text style={{fontSize: 34}}>Item Name</Text>
                         <TextInput ref={itemNameRef}
                             placeholder="Item Name"
                             value={itemNameData}
@@ -326,13 +326,13 @@ export default function ReportAnItem(info) {
                                 setItemName(text);
                             }}
                             onBlur={() => { (isEmpty(itemNameData, minNameLength) ? setItemNameViolates(1) : (itemNameData.length > maxNameLength ? setItemNameViolates(2) : setItemNameViolates(0))) }}
-                            style={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: "25", borderColor: "rgb(74, 179, 211)", borderWidth: "2", textAlign: "center", borderRadius: 10 }}
+                            style={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
                         />
                         {itemNameViolates !==0 && <Text style={styles.errorText}>{(itemNameViolates == 1 ? "Item name is too short" : "Item name is too long")}</Text>}
                     </View>
 
                     <View ref={itemCategoryRef} style={{ alignItems: "center", position: "relative", top: "3%" }}>
-                        <Text style={{fontSize: "34"}}>Item Category</Text>
+                        <Text style={{fontSize: 34}}>Item Category</Text>
                         <SelectList
                             search={false}
                             data={DatabaseKeys.categories}
@@ -340,16 +340,16 @@ export default function ReportAnItem(info) {
                             defaultOption={categoryData ? { key: categoryData, value: categoryData } : undefined}
                             save='value'
                             placeholder="Select an item category"
-                            inputStyles={{height: "50", fontSize: "25"}}
-                            boxStyles={{height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: "2", textAlign: "center", borderRadius: 10}}
-                            dropdownTextStyles={{fontSize: "25"}}
-                            dropdownStyles={{backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: "2", textAlign: "center", borderRadius: 10}}
+                            inputStyles={{height: "50", fontSize: 25}}
+                            boxStyles={{height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10}}
+                            dropdownTextStyles={{fontSize: 25}}
+                            dropdownStyles={{backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10}}
                         />
                         {(clickedSubmit && !categoryData) && <Text style={styles.errorText}>Category can not be blank</Text>}
                     </View>
                         
                     <View ref={imagesRef} style={{ alignItems: "center", position: "relative", top: "4.5%" }}>
-                        <Text style={{fontSize: "34"}}>{`Item Image${(imageData.length > 1 ? "s" : "")}`}</Text>
+                        <Text style={{fontSize: 34}}>{`Item Image${(imageData.length > 1 ? "s" : "")}`}</Text>
                         <ScrollView bounces={false} ref={imageDisplayer} style={{ display: "flex"}} horizontal showsHorizontalScrollIndicator={false}>
                             {imageData.map((picture, index) => (
                                 <Pressable key={index}>
@@ -371,10 +371,10 @@ export default function ReportAnItem(info) {
                     </View> 
 
                     <View ref={itemDescriptionRef} style={{ alignItems: "center", position: "relative", top: "6%" }}>
-                        <Text style={{fontSize: "34"}}>Item Description</Text>
+                        <Text style={{fontSize: 34}}>Item Description</Text>
                         <TextInput
                             multiline={true}
-                            style={{ height: "100", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: "25", borderColor: "rgb(74, 179, 211)", borderWidth: "2", textAlign: "center", borderRadius: 10 }}
+                            style={{ height: "100", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
                             placeholder="Item Description"
                             value={itemDescData}
                             onChangeText={(text) => { setItemDesc(text) }}
@@ -383,7 +383,7 @@ export default function ReportAnItem(info) {
                     </View>
 
                     <View ref={countyRef} style={{ alignItems: "center", position: "relative", top: "7.5%" }}>
-                        <Text style={{fontSize: "34"}}>County</Text>
+                        <Text style={{fontSize: 34}}>County</Text>
                         <SelectList
                             data={DatabaseKeys.counties}
                             search={true}
@@ -393,19 +393,19 @@ export default function ReportAnItem(info) {
                             defaultOption={countyData ? { key: countyData, value: countyData } : undefined}
                             save='value'
                             placeholder="Select a county"
-                            inputStyles={{height: "50", fontSize: "25"}}
-                            boxStyles={{height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: "2", textAlign: "center", borderRadius: 10}}
-                            dropdownTextStyles={{fontSize: "25"}}
-                            dropdownStyles={{backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: "2", textAlign: "center", borderRadius: 10}}
+                            inputStyles={{height: "50", fontSize: 25}}
+                            boxStyles={{height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10}}
+                            dropdownTextStyles={{fontSize: 25}}
+                            dropdownStyles={{backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10}}
                         />
                         {(clickedSubmit && !countyData) && <Text style={styles.errorText}>Category can not be blank</Text>}
                     </View>
 
                     <View ref={areaDescriptionRef} style={{ alignItems: "center", position: "relative", top: "9%" }}>
-                        <Text style={{fontSize: "34"}}>Area Description</Text>
+                        <Text style={{fontSize: 34}}>Area Description</Text>
                         <TextInput
                             multiline={true}
-                            style={{ height: "100", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: "25", borderColor: "rgb(74, 179, 211)", borderWidth: "2", textAlign: "center", borderRadius: 10 }}
+                            style={{ height: "100", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
                             placeholder="Area Description"
                             value={areaDescData}
                             onChangeText={(text) => { setAreaDesc(text) }}
@@ -414,11 +414,11 @@ export default function ReportAnItem(info) {
                     </View>
 
                     <View ref={locationRef} style={{ alignItems: "center", position: "relative", top: "10.5%" }}>
-                        <Text style={{ fontSize: "32", textAlign: "center" }}>Location</Text>
-                        <View style={{height: (useAuto ? "50" : "100"), width: "90%", backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: "2", borderRadius: 10 }}>
+                        <Text style={{ fontSize: 32, textAlign: "center" }}>Location</Text>
+                        <View style={{height: (useAuto ? "50" : "100"), width: "90%", backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, borderRadius: 10 }}>
                             <View style={{paddingTop: "5", display: "flex", flexDirection: "row", alignSelf: "center", alignItems: "center" }}>
                                 <Checkbox style={{ width: 35, height: 35 }} value={useAuto} onValueChange={() => { getCurrentLocation() }} />
-                                <Text style={{ marginLeft: "5", fontSize: "25" }}>Use current location</Text>
+                                <Text style={{ marginLeft: "5", fontSize: 25 }}>Use current location</Text>
                             </View>
 
                             <View style={{marginTop: "10", display: (useAuto ? "none" : "flex")}}>
@@ -427,7 +427,7 @@ export default function ReportAnItem(info) {
                                     value={manualAddressData}
                                     onChangeText={(text) => { setManualAddressData(text) }}
                                     onBlur={() => { (isEmpty(manualAddressData, minLocationLength) ? setMADViolates(1) : (manualAddressData.length > maxLocationLength ? setMADViolates(2) : setMADViolates(0))) }}
-                                    style={{textAlign: "center", fontSize: "25"}}
+                                    style={{textAlign: "center", fontSize: 25}}
                                 />
                             </View>
                         </View>
@@ -437,7 +437,7 @@ export default function ReportAnItem(info) {
                         
                     <View style={{ alignItems: "center", position: "relative", top: "15%" }}>
                         <Pressable onPress={() => { if (!reportingTicket) {checkForCompletion()} }}>
-                            <Text style={{ fontSize: "35", padding: "15", backgroundColor: "rgb(0, 175, 229)", borderColor: "rgb(0, 129, 168)", borderWidth: "2", borderRadius: 25 }}>
+                            <Text style={{ fontSize: 25, padding: "15", backgroundColor: "rgb(0, 175, 229)", borderColor: "rgb(0, 129, 168)", borderWidth: 2, borderRadius: 25 }}>
                                 {(!editEntryData ? (!reportingTicket ? "Report Item" : "Reporting ...") : (!reportingTicket ? "Save Edits" : "Saving Edits ..."))}
                             </Text>
                         </Pressable>
@@ -460,10 +460,10 @@ const styles = StyleSheet.create({
     errorText: {
         borderRadius: 10,
         borderColor: "red",
-        borderWidth: "2",
+        borderWidth: 2,
         backgroundColor: "rgb(255, 195, 195)",
         textAlign: "center",
-        fontSize: "25",
+        fontSize: 25,
         color: 'red',
         fontWeight: 'bold',
     },
@@ -471,14 +471,14 @@ const styles = StyleSheet.create({
     header: {
         width: "100%",
         textAlign: "center",
-        fontSize: "25",
+        fontSize: 25,
         backgroundColor: "rgb(179, 255, 156)",
 
     },
     picture: {
         backgroundColor: "rgb(128, 225, 255)",
         borderColor: "rgb(74, 179, 211)", 
-        borderWidth: "2",
+        borderWidth: 2,
         borderRadius: 10,
         width: windowDimensions.width * 0.9,
         height: windowDimensions.width * 0.9,
@@ -486,7 +486,7 @@ const styles = StyleSheet.create({
     pictureAdd: {
         backgroundColor: "rgb(128, 225, 255)",
         borderColor: "rgb(74, 179, 211)", 
-        borderWidth: "2",
+        borderWidth: 2,
         borderRadius: 10,
         resizeMode: "contain",
         width: windowDimensions.width * 0.9,
@@ -496,10 +496,10 @@ const styles = StyleSheet.create({
     pictureNumber: {
         backgroundColor: "rgb(128, 225, 255)", 
         borderColor: "rgb(74, 179, 211)", 
-        borderWidth: "2", 
+        borderWidth: 2, 
         textAlign: "center", 
         borderRadius: 10,
-        borderWidth: 1,
+        //borderWidth: 1,
         padding: 5,
         fontSize: 15,
         position: "absolute",
@@ -509,10 +509,10 @@ const styles = StyleSheet.create({
     pictureRemove: {
         backgroundColor: "rgb(255, 195, 195)",
         borderColor: "red", 
-        borderWidth: "2", 
+        borderWidth: 2, 
         textAlign: "center", 
         borderRadius: 10,
-        borderWidth: 1,
+        //borderWidth: 1,
         padding: 5,
         fontSize: 15,
         position: "absolute",
@@ -520,13 +520,13 @@ const styles = StyleSheet.create({
         bottom: windowDimensions.width * 0.04,
     },
     primaryButton: {
-        fontSize: "20",
+        fontSize: 20,
         backgroundColor: "rgb(247, 255, 195)",
         borderColor: "yellow", 
-        borderWidth: "2", 
+        borderWidth: 2, 
         textAlign: "center", 
         borderRadius: 10,
-        borderWidth: 1,
+        //borderWidth: 1,
         position: "absolute",
         left: windowDimensions.width * 0.6375,
         bottom: windowDimensions.width * 0.75,

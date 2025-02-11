@@ -133,12 +133,12 @@ export default function RecoverScreen(props) {
     return (
         <View>
             <View style={{ height: "10%", width: "100%", backgroundColor: "rgb(0, 175, 229)", display: "flex", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
-                <Text style={{ fontSize: "40", position: "absolute", bottom: "5%" }}>Recover an Item</Text>
+                <Text style={{ fontSize: 40, position: "absolute", bottom: "5%" }}>Recover an Item</Text>
             </View>
             <View style={{ height: "90%", backgroundColor: "rgb(96, 218, 255)" }}>
                 <ScrollView style={{ height: "100%", width: "100%", flexGrow: 1 }} bounces={false}>
                     <View style={{ alignItems: "center", position: "relative", top: "3%" }}>
-                        <Text style={{ fontSize: "34" }}>County</Text>
+                        <Text style={{ fontSize: 34 }}>County</Text>
                         <SelectList
                             search={true}
                             placeholder="Select a county"
@@ -148,14 +148,14 @@ export default function RecoverScreen(props) {
                             setSelected={setCounty}
                             onSelect={() => { hasDataToStartImport() }}
                             save='value'
-                            inputStyles={{ height: "50", fontSize: "25" }}
-                            boxStyles={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: "2", textAlign: "center", borderRadius: 10 }}
-                            dropdownTextStyles={{ fontSize: "25" }}
-                            dropdownStyles={{ backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: "2", textAlign: "center", borderRadius: 10 }}
+                            inputStyles={{ height: "50", fontSize: 25 }}
+                            boxStyles={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
+                            dropdownTextStyles={{ fontSize: 25 }}
+                            dropdownStyles={{ backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
                         />
                     </View>
                     <View style={{ alignItems: "center", position: "relative", top: "6%" }}>
-                        <Text style={{ fontSize: "34" }}>Item Category</Text>
+                        <Text style={{ fontSize: 34 }}>Item Category</Text>
                         <SelectList
                             search={false}
                             data={DatabaseKeys.categories}
@@ -163,17 +163,17 @@ export default function RecoverScreen(props) {
                             onSelect={() => { hasDataToStartImport() }}
                             save='value'
                             placeholder="Select an item category"
-                            inputStyles={{ height: "50", fontSize: "25" }}
-                            boxStyles={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: "2", textAlign: "center", borderRadius: 10 }}
-                            dropdownTextStyles={{ fontSize: "25" }}
-                            dropdownStyles={{ backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: "2", textAlign: "center", borderRadius: 10 }}
+                            inputStyles={{ height: "50", fontSize: 25 }}
+                            boxStyles={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
+                            dropdownTextStyles={{ fontSize: 25 }}
+                            dropdownStyles={{ backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
                         />
                     </View>
 
                     <View style={{ alignItems: "center", position: "relative", top: "9%" }}>
-                        <Text style={{ fontSize: "34" }}>Item Description</Text>
+                        <Text style={{ fontSize: 34 }}>Item Description</Text>
                         <TextInput
-                            style={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: "25", borderColor: "rgb(74, 179, 211)", borderWidth: "2", textAlign: "center", borderRadius: 10 }}
+                            style={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
                             placeholder="Item Description"
                             value={itemDescData}
                             onChangeText={(text) => { setItemDesc(text) }}
@@ -182,9 +182,9 @@ export default function RecoverScreen(props) {
                     </View>
 
                     <View style={{ alignItems: "center", position: "relative", top: "12%" }}>
-                        <Text style={{ fontSize: "34" }}>Area Describe</Text>
+                        <Text style={{ fontSize: 25 }}>Area Describe</Text>
                         <TextInput
-                            style={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: "25", borderColor: "rgb(74, 179, 211)", borderWidth: "2", textAlign: "center", borderRadius: 10 }}
+                            style={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
                             placeholder="Area Describe"
                             value={areaDescData}
                             onChangeText={(text) => { setAreaDesc(text) }}
@@ -192,16 +192,16 @@ export default function RecoverScreen(props) {
                     </View>
 
                     <View style={{ alignItems: "center", position: "relative", top: "15%" }}>
-                        <Text style={{ fontSize: "34" }}>Reports</Text>
-                        <View style={{ height: ((Object.keys(imagesLoaded).length) <= 0 ? "50" : "auto"), width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: "25", borderColor: "rgb(74, 179, 211)", borderWidth: "2", textAlign: "center", borderRadius: 10 }} onLayout={(event) => { const { width, height } = event.nativeEvent.layout; setTicketSize({ width: width - 160, height }); }}>
-                            {!showImportedData && <View style={styles.errorText}><Text style={{textAlign: "center", fontSize: "25"}}>No reports</Text></View>}
-                            {(showImportedData && (Object.keys(imagesLoaded).length) <= 0) && <Text style={{ height: "50", backgroundColor: "rgb(247, 255, 195)", borderColor: "yellow", borderRadius: 10, borderWidth: "2", textAlign: "center", fontWeight: 'bold', fontSize: "25" }}>Pulling reports</Text>}
+                        <Text style={{ fontSize: 34 }}>Reports</Text>
+                        <View style={{ height: ((Object.keys(imagesLoaded).length) <= 0 ? "50" : "auto"), width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize:25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }} onLayout={(event) => { const { width, height } = event.nativeEvent.layout; setTicketSize({ width: width - 160, height }); }}>
+                            {!showImportedData && <View style={styles.errorText}><Text style={{textAlign: "center", fontSize: 25}}>No reports</Text></View>}
+                            {(showImportedData && (Object.keys(imagesLoaded).length) <= 0) && <Text style={{ height: "50", backgroundColor: "rgb(247, 255, 195)", borderColor: "yellow", borderRadius: 10, borderWidth: 2, textAlign: "center", fontWeight: 'bold', fontSize: 25 }}>Pulling reports</Text>}
                             {showImportedData && showImportedData.map((entry, index) => (
-                                <Pressable style={{ display: "flex", opacity: ((Object.keys(imagesLoaded).length) <= 0 ? 0 : 1), flexDirection: "row", backgroundColor: "rgb(247, 255, 195)", borderColor: "yellow", borderRadius: 10, borderWidth: "2" }} key={index} onPress={() => { navigation.navigate("Item Info Screen", { key: entry.data[0], data: entry.data[1], path: `reports/${countyData}/${categoryData}` }) }}>
+                                <Pressable style={{ display: "flex", opacity: ((Object.keys(imagesLoaded).length) <= 0 ? 0 : 1), flexDirection: "row", backgroundColor: "rgb(247, 255, 195)", borderColor: "yellow", borderRadius: 10, borderWidth: 2 }} key={index} onPress={() => { navigation.navigate("Item Info Screen", { key: entry.data[0], data: entry.data[1], path: `reports/${countyData}/${categoryData}` }) }}>
                                     <Image onLoad={() => { setImagesLoaded((dict) => ({ ...dict, [index]: true }))}} style={{ width: 150, height: 150, borderRadius: 10 }} source={{ uri: entry.data[1].images[entry.data[1].primaryImageIndex] }}></Image>
                                     {imagesLoaded[index] && <View style={{ position: "relative", width: "50%" }}>
-                                        <Text style={{ fontSize: "21", width: ticketSize.width, backgroundColor: "rgb(184, 192, 132))", borderColor: "rgb(144, 150, 103))", borderWidth: "2", textAlign: "center", borderRadius: 10 }}>{entry.data[1].itemName}</Text>
-                                        <Text numberOfLines={4} style={{ fontSize: "18", width: ticketSize.width, textAlign: "center" }}>{(entry.data[1].itemDescription == "" ? "No description" : entry.data[1].itemDescription)}</Text>
+                                        <Text style={{ fontSize: 21, width: ticketSize.width, backgroundColor: "rgb(184, 192, 132))", borderColor: "rgb(144, 150, 103))", borderWidth: 2, textAlign: "center", borderRadius: 10 }}>{entry.data[1].itemName}</Text>
+                                        <Text numberOfLines={4} style={{ fontSize: 18, width: ticketSize.width, textAlign: "center" }}>{(entry.data[1].itemDescription == "" ? "No description" : entry.data[1].itemDescription)}</Text>
                                     </View>}
                                 </Pressable>
                             ))}
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
         height: "50",
         borderRadius: 10,
         borderColor: "red",
-        borderWidth: "2",
+        borderWidth: 2,
         backgroundColor: "rgb(255, 195, 195)",
         justifyContent: "center",
         color: 'red',

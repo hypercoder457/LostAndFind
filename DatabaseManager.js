@@ -30,7 +30,7 @@ export default class DatabaseManager {
     await set(experationData, newExperation);
   }
 
-  static async deleteEntry(path, entry) {
+  static async deleteEntry(path, fullPath) {
     try {
       const parentEntry = ref(this.db, path);
       const snapShot = await get(parentEntry);
@@ -39,10 +39,10 @@ export default class DatabaseManager {
           await set(parentEntry, "");
         }
       }
-      const entryRef = ref(this.db, (path+entry));
+      const entryRef = ref(this.db, fullPath);
       await remove(entryRef);
     } catch (err) {
-     return;
+      return;
     }
   }
 
@@ -90,6 +90,9 @@ export default class DatabaseManager {
   
     const uploadPromises = images.map(async (uri) => {
       try {
+        if (uri.includes("https://firebasestorage.googleapis.com")) {
+          return(uri);
+        }
         const fileInfo = await FileSystem.getInfoAsync(uri);
         if (fileInfo.exists) {
           const { uri: fileUri } = fileInfo;

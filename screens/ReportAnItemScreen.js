@@ -62,11 +62,16 @@ export default function ReportAnItem(info) {
     const editEntryPath = (info.route.params ? info.route.params.path : null);
     const editEntryKey = (info.route.params ? info.route.params.key : null);
     const editEntryData = (info.route.params ? info.route.params.data : null);
+    const editEntryReportKey = (info.route.params ? info.route.params.reportPath : null);
 
     useEffect(() => {
         if (editEntryData) {
-            setItemName(editEntryData.itemName);
-            setCategory(editEntryData.category)
+            const processedImages = [];
+            for (let image of editEntryData.images) {
+                processedImages.push({uri: image});
+            }
+            setImageData(processedImages);
+            setPrimaryImage(editEntryData.primaryImageIndex);
             setItemDesc(editEntryData.itemDescription);
             setCounty(editEntryData.county);
             setAreaDesc(editEntryData.areaDescription);
@@ -159,13 +164,17 @@ export default function ReportAnItem(info) {
         const totalImages = imageData.length;
         let missingImage = false;
         for (let i = totalImages - 1; i >= 0; i--) {
-            const pictureInfo = await FileSystem.getInfoAsync(imageData[i].uri);
-            if (pictureInfo.exists) {
-                useImageData.push(imageData[i].uri);
+            if (!(imageData[i].uri.includes("https://firebasestorage.googleapis.com"))) {
+                const pictureInfo = await FileSystem.getInfoAsync(imageData[i].uri);
+                if (pictureInfo.exists) {
+                    useImageData.push(imageData[i].uri);
+                } else {
+                    removeImegeFromPage(i);
+                    missingImage = true;
+                };
             } else {
-                removeImegeFromPage(i);
-                missingImage = true;
-            };
+                useImageData.push(imageData[i].uri);
+            }
         }
         if (missingImage) {
             Alert.alert("Missing File(s)", "Unable to submit ticket because one or more of your images was deleted!");
@@ -217,7 +226,14 @@ export default function ReportAnItem(info) {
 
         const results = await DatabaseManager.makeReport(reportEntry);
         if (results) {
-            navigation.replace("Home Page");
+            if (editEntryPath) {
+                await DatabaseManager.deleteEntry(editEntryPath, editEntryKey);
+                const userPath = "users/"+editEntryData.userId;
+                await DatabaseManager.deleteEntry(userPath, (userPath+"/reports/"+editEntryReportKey));
+                navigation.goBack();
+            } else {
+                navigation.replace("Home Page");
+            }
         } else {
             setReportingTicket(false);
             Alert.alert("Error", "Unable to submit ticket! Please try again!");

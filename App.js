@@ -8,6 +8,7 @@ import ReportAnItemScreen from './screens/ReportAnItemScreen';
 import RecoverScreen from './screens/RecoverScreen';
 import ItemInfoScreen from './screens/ItemInfoScreen';
 import EditScreen from './screens/EditScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App() {
   //Initial Setup

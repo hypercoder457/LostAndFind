@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import Checkbox from 'expo-checkbox';
 import { useNavigation } from "@react-navigation/native";
 import { Image, Dimensions, ScrollView, TouchableHighlight, View, TextInput, StyleSheet, Text, Pressable, Alert } from "react-native";
@@ -22,7 +22,7 @@ const maxLocationLength = 125;
 const maxItemDescriptionLength = 125;
 const maxAreaDescriptionLength = 125;
 
-export default function ReportAnItem(props) {
+export default function ReportAnItem(info) {
     const navigation = useNavigation();
     const scrollViewRef = useRef();
     const itemNameRef = useRef();
@@ -58,6 +58,21 @@ export default function ReportAnItem(props) {
     const [useAuto, setUseAuto] = React.useState(false);
     const [locationAddress, setLocationAddress] = React.useState();
     // End of variables
+
+    const editEntryPath = (info.route.params ? info.route.params.path : null);
+    const editEntryKey = (info.route.params ? info.route.params.key : null);
+    const editEntryData = (info.route.params ? info.route.params.data : null);
+
+    useEffect(() => {
+        if (editEntryData) {
+            setItemName(editEntryData.itemName);
+            setCategory(editEntryData.category)
+            setItemDesc(editEntryData.itemDescription);
+            setCounty(editEntryData.county);
+            setAreaDesc(editEntryData.areaDescription);
+            setManualAddressData(editEntryData.areaLocation);
+        }
+    }, []);
 
     function isEmpty(text, minLength) {
         return (!(/[a-zA-Z]/.test(text)) || text.length <= minLength);
@@ -282,13 +297,13 @@ export default function ReportAnItem(props) {
     return (
         <View>
             <View style={{ height: "10%", width: "100%", backgroundColor: "rgb(0, 175, 229)", display: "flex", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
-                <Text style={{ fontSize: "40", position: "absolute", bottom: "5%" }}>Report an Item</Text>
+                <Text style={{ fontSize: "40", position: "absolute", bottom: "5%" }}>{(!editEntryData ? "Report an Item" : "Edit a Report")}</Text>
             </View>
             <View style={{ height: "90%", backgroundColor: "rgb(96, 218, 255)" }}>
                 <ScrollView ref={scrollViewRef} style={{ height: "100%", width: "100%", flexGrow: 1 }} bounces={false}>
-                    <View ref={itemNameRef} style={{ alignItems: "center", position: "relative", top: "1.5%" }}>
+                    <View style={{ alignItems: "center", position: "relative", top: "1.5%" }}>
                         <Text style={{fontSize: "34"}}>Item Name</Text>
-                        <TextInput
+                        <TextInput ref={itemNameRef}
                             placeholder="Item Name"
                             value={itemNameData}
                             onChangeText={(text) => {
@@ -306,6 +321,7 @@ export default function ReportAnItem(props) {
                             search={false}
                             data={DatabaseKeys.categories}
                             setSelected={setCategory}
+                            defaultOption={categoryData ? { key: categoryData, value: categoryData } : undefined}
                             save='value'
                             placeholder="Select an item category"
                             inputStyles={{height: "50", fontSize: "25"}}
@@ -332,7 +348,7 @@ export default function ReportAnItem(props) {
                                 </Pressable>
                             ))}
                             <Pressable ref={imageInserter} style={{ display: (imageInserterVisible ? "flex" : "none") }} onPress={() => { addImagesToPage() }}>
-                                <Image source={require("../assets/plusIcon.png")} style={styles.picture} />
+                                <Image source={require("../assets/plusIcon.png")} style={styles.pictureAdd} />
                             </Pressable>
                         </ScrollView>
                         {(clickedSubmit && imageData.length <= 0) && <Text style={styles.errorText}>You must have at least one image</Text>}
@@ -358,6 +374,7 @@ export default function ReportAnItem(props) {
                             searchPlaceholder="Search"
                             notFoundText="No results"
                             setSelected={setCounty}
+                            defaultOption={countyData ? { key: countyData, value: countyData } : undefined}
                             save='value'
                             placeholder="Select a county"
                             inputStyles={{height: "50", fontSize: "25"}}
@@ -405,7 +422,7 @@ export default function ReportAnItem(props) {
                     <View style={{ alignItems: "center", position: "relative", top: "15%" }}>
                         <Pressable onPress={() => { if (!reportingTicket) {checkForCompletion()} }}>
                             <Text style={{ fontSize: "35", padding: "15", backgroundColor: "rgb(0, 175, 229)", borderColor: "rgb(0, 129, 168)", borderWidth: "2", borderRadius: 25 }}>
-                                {(!reportingTicket ? "Report item" : "Reporting ...")}
+                                {(!editEntryData ? (!reportingTicket ? "Report Item" : "Reporting ...") : (!reportingTicket ? "Save Edits" : "Saving Edits ..."))}
                             </Text>
                         </Pressable>
                     </View>
@@ -449,6 +466,16 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: windowDimensions.width * 0.9,
         height: windowDimensions.width * 0.9,
+    },
+    pictureAdd: {
+        backgroundColor: "rgb(128, 225, 255)",
+        borderColor: "rgb(74, 179, 211)", 
+        borderWidth: "2",
+        borderRadius: 10,
+        resizeMode: "contain",
+        width: windowDimensions.width * 0.9,
+        height: windowDimensions.width * 0.9,
+        padding: windowDimensions.width * 0.3,
     },
     pictureNumber: {
         backgroundColor: "rgb(128, 225, 255)", 

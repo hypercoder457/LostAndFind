@@ -51,35 +51,35 @@ export default function Login(props) {
     return (
         <View>
             <View style={{ height: "10%", width: "100%", backgroundColor: "rgb(0, 175, 229)", display: "flex", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
-                <Text style={{ fontSize: "40", position: "absolute", bottom: "5%" }}>Make an Account</Text>
+                <Text style={{ fontSize: 40, position: "absolute", bottom: "5%" }}>Make an Account</Text>
             </View>
             <View style={{ height: "90%", backgroundColor: "rgb(96, 218, 255)" }}>
                 <ScrollView ref={scrollViewRef} style={{height: "200%",width: "100%"}} bounces={false}>
                     <View ref={firstNameRef} style={{ alignItems: "center", position: "relative", top: "5%" }}>
-                        <Text style={{ fontSize: "34" }}>First name</Text>
+                        <Text style={{ fontSize: 34 }}>First name</Text>
                         <Controller
                             control={control}
                             name="firstname"
                             rules={{ required: "First name is required", minLength: { value: 3, message: "First name must be within 3-25 characters long" }, maxLength: { value: 25, message: "First name must be within 3-25 characters long" }, pattern: { value: /^[A-Za-z]+$/, message: "Only letters a-Z are allowed" } }}
                             render={({ field: { onChange, onBlur, value } }) => <TextInput onBlur={onBlur} onChangeText={onChange} value={value} placeholder="First Name"
-                            style={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: "25", borderColor: "rgb(74, 179, 211)", borderWidth: "2", textAlign: "center", borderRadius: 10 }} />}
+                            style={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }} />}
                         />
                         {errors.firstname && <Text style={styles.errorText}>{errors.firstname.message}</Text>}
                     </View>
                     <View ref={lastNameRef} style={{ alignItems: "center", position: "relative", top: "10%" }}>
-                        <Text style={{ fontSize: "34" }}>Last name</Text>
+                        <Text style={{ fontSize: 34 }}>Last name</Text>
                         <Controller
                             control={control}
                             name="lastname"
                             rules={{ required: "Last name is required", minLength: { value: 3, message: "Last name must be within 3-25 characters long" }, maxLength: { value: 25, message: "Last name must be within 3-25 characters long" }, pattern: { value: /^[A-Za-z]+$/, message: "Only letters a-Z are allowed" } }}
                             render={({ field: { onChange, onBlur, value } }) => <TextInput onBlur={onBlur} onChangeText={onChange} value={value} placeholder="Last Name"
-                                style={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: "25", borderColor: "rgb(74, 179, 211)", borderWidth: "2", textAlign: "center", borderRadius: 10 }} />}
+                                style={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }} />}
                         />
                         {errors.lastname && <Text style={styles.errorText}>{errors.lastname.message}</Text>}
                     </View>
                     <View style={{ alignItems: "center", position: "relative", top: "15%" }}>
-                        <Text style={{ fontSize: "34" }}>Terms of service</Text>
-                        <View style={{backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: "2", textAlign: "center", borderRadius: 10 }}>
+                        <Text style={{ fontSize: 34 }}>Terms of service</Text>
+                        <View style={{backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}>
                             <Text style={styles.TOSRule}>- I will not post personal information on this app</Text>
                             <Text style={styles.TOSRule}>- I will only search for items that I have lost</Text>
                             <Text style={styles.TOSRule}>- I will not use this app to spread hate or lie to others</Text>
@@ -88,12 +88,12 @@ export default function Login(props) {
                     <View ref={TOSRef} style={{ alignSelf: "center",alignItems: "center", position: "relative", top: "20%" }}>
                         <View style={{display: "flex", flexDirection: "row"}}>
                             <Checkbox style={{width: "25", height: "25", marginRight: "25"}} value={agreeded} onValueChange={()=> {setAgreeded(!agreeded)}}/>
-                            <Text style={{fontSize: "16"}}>I agree to the Terms of Service</Text>
+                            <Text style={{fontSize: 16}}>I agree to the Terms of Service</Text>
                         </View>
                         {(clickedSubmit && !agreeded) && <Text style={styles.errorText}>You must agree to the Terms of Service to use this app</Text>}
                     </View>
                     <Pressable style={{  alignSelf: "center", marginTop: "120%"}} onPress={handleSubmit(onSubmit, onError)}>
-                        <Text style={{ fontSize: "35", padding: "15", backgroundColor: "rgb(0, 175, 229)", borderColor: "rgb(0, 129, 168)", borderWidth: "2", borderRadius: 25 }}>Create account</Text>
+                        <Text style={{ fontSize: 35, padding: "15", backgroundColor: "rgb(0, 175, 229)", borderColor: "rgb(0, 129, 168)", borderWidth: 2, borderRadius: 25 }}>Create account</Text>
                     </Pressable>
                 </ScrollView>
             </View>
@@ -103,16 +103,16 @@ export default function Login(props) {
 
 const styles = StyleSheet.create({
     TOSRule: {
-        fontSize: "21",
+        fontSize: 21,
         textAlign: "center"
     },
     errorText: {
         borderRadius: 10,
         borderColor: "red",
-        borderWidth: "2",
+        borderWidth: 2,
         backgroundColor: "rgb(255, 195, 195)",
         textAlign: "center",
-        fontSize: "25",
+        fontSize: 25,
         color: 'red',
         fontWeight: 'bold',
     },

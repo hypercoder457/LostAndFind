@@ -5,8 +5,11 @@ import { useNavigation } from "@react-navigation/native";
 
 import LocalDataManager from "../LocalDataManager";
 import styles from "../styles";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function HomeScreen(props) {
+    AsyncStorage.clear();
+
     const navigation = useNavigation();
     
     function canReportAnItem() {

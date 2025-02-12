@@ -19,7 +19,6 @@ export default function EditScreen(props) {
 
     useEffect(() => {
         async function getUserRepors() {
-
             if (LocalDataManager.dataLoaded && "userId" in LocalDataManager.userData) {
 
                 const results = await DatabaseManager.getDataSection(`users/${LocalDataManager.userData.userId}/reports`);

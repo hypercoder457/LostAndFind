@@ -8,6 +8,7 @@ export default class LocalDataManager {
         lastName: "",
         tBNP: "0", // Time Before Next Post
         tBNF: "0", // Time Before Next Find
+        tBNE: "0", // Time Before Next Edit
         foundReports: [],
         userId: "",
     };

@@ -66,9 +66,11 @@ export default function ReportAnItem(info) {
 
     useEffect(() => {
         if (editEntryData) {
+            setItemName(editEntryData.itemName);
+            setCategory(editEntryData.category);
             const processedImages = [];
             for (let image of editEntryData.images) {
-                processedImages.push({uri: image});
+                processedImages.push({ uri: image });
             }
             setImageData(processedImages);
             setPrimaryImage(editEntryData.primaryImageIndex);
@@ -76,6 +78,14 @@ export default function ReportAnItem(info) {
             setCounty(editEntryData.county);
             setAreaDesc(editEntryData.areaDescription);
             setManualAddressData(editEntryData.areaLocation);
+            async function entryStillExists() {
+                let results = await DatabaseManager.hasEntry(editEntryKey);
+                if (!results) {
+                    Alert.alert("Notice", "This entry no longer exists!");
+                    navigation.replace("Edit Screen");
+                }
+            }
+            entryStillExists();
         }
     }, []);
 
@@ -85,10 +95,10 @@ export default function ReportAnItem(info) {
 
     function scrollToView(target) {
         target.current.measureLayout(
-          scrollViewRef.current,
-          (x, y, width, height) => {
-            scrollViewRef.current.scrollTo({ y: y - 50, animated: true });
-          },
+            scrollViewRef.current,
+            (x, y, width, height) => {
+                scrollViewRef.current.scrollTo({ y: y - 50, animated: true });
+            },
         );
     }
 
@@ -177,18 +187,30 @@ export default function ReportAnItem(info) {
             }
         }
         if (missingImage) {
-            Alert.alert("Missing File(s)", "Unable to submit ticket because one or more of your images was deleted!");
+            Alert.alert("Missing File(s)", "Unable to submit because one or more of your images was deleted!");
             scrollToView(imagesRef);
             console.log("Con9");
             return;
         }
 
+
         const currentDate = new Date();
         if (LocalDataManager.dataLoaded) {
-            if ("tBNP" in LocalDataManager.userData) {
+            const useTBN = (editEntryPath ? "tBNE" : "tBNP");
+            if (useTBN in LocalDataManager.userData) {
+                if (useTBN == "tBNE") {
+                    const currentTime = parseInt(currentDate.getTime());
+                    const tBNE = parseInt(LocalDataManager.userData.tBNE);
+                    if (tBNE > currentTime) {
+                        const secondsLeft = Math.ceil((tBNE - currentTime) * 0.001);
+                        Alert.alert("Notice", "You can save your changes in " + secondsLeft + " seconds!");
+                        return;
+                    }
+                }
+
                 const futureTime = parseInt(currentDate.getTime()) + 30000;
                 const stringFutureTime = futureTime.toString();
-                LocalDataManager.updateUserData("tBNP", stringFutureTime);
+                LocalDataManager.updateUserData(useTBN, stringFutureTime);
                 LocalDataManager.saveUserData();
             } else {
                 Alert.alert("Malformed Data", "Unable to submit ticket because your local data is malformed!");
@@ -228,9 +250,9 @@ export default function ReportAnItem(info) {
         if (results) {
             if (editEntryPath) {
                 await DatabaseManager.deleteEntry(editEntryPath, editEntryKey);
-                const userPath = "users/"+editEntryData.userId;
-                await DatabaseManager.deleteEntry(userPath, (userPath+"/reports/"+editEntryReportKey));
-                navigation.goBack();
+                const userPath = "users/" + editEntryData.userId;
+                await DatabaseManager.deleteEntry(userPath, (userPath + "/reports/" + editEntryReportKey));
+                navigation.replace("Edit Screen");
             } else {
                 navigation.replace("Home Page");
             }
@@ -318,7 +340,7 @@ export default function ReportAnItem(info) {
             <View style={{ height: "90%", backgroundColor: "rgb(96, 218, 255)" }}>
                 <ScrollView ref={scrollViewRef} style={{ height: "100%", width: "100%", flexGrow: 1 }} bounces={false}>
                     <View style={{ alignItems: "center", position: "relative", top: "1.5%" }}>
-                        <Text style={{fontSize: 34}}>Item Name</Text>
+                        <Text style={{ fontSize: 34 }}>Item Name</Text>
                         <TextInput ref={itemNameRef}
                             placeholder="Item Name"
                             value={itemNameData}
@@ -328,11 +350,11 @@ export default function ReportAnItem(info) {
                             onBlur={() => { (isEmpty(itemNameData, minNameLength) ? setItemNameViolates(1) : (itemNameData.length > maxNameLength ? setItemNameViolates(2) : setItemNameViolates(0))) }}
                             style={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
                         />
-                        {itemNameViolates !==0 && <Text style={styles.errorText}>{(itemNameViolates == 1 ? "Item name is too short" : "Item name is too long")}</Text>}
+                        {itemNameViolates !== 0 && <Text style={styles.errorText}>{(itemNameViolates == 1 ? "Item name is too short" : "Item name is too long")}</Text>}
                     </View>
 
                     <View ref={itemCategoryRef} style={{ alignItems: "center", position: "relative", top: "3%" }}>
-                        <Text style={{fontSize: 34}}>Item Category</Text>
+                        <Text style={{ fontSize: 34 }}>Item Category</Text>
                         <SelectList
                             search={false}
                             data={DatabaseKeys.categories}
@@ -340,17 +362,17 @@ export default function ReportAnItem(info) {
                             defaultOption={categoryData ? { key: categoryData, value: categoryData } : undefined}
                             save='value'
                             placeholder="Select an item category"
-                            inputStyles={{height: "50", fontSize: 25}}
-                            boxStyles={{height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10}}
-                            dropdownTextStyles={{fontSize: 25}}
-                            dropdownStyles={{backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10}}
+                            inputStyles={{ height: "50", fontSize: 25 }}
+                            boxStyles={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
+                            dropdownTextStyles={{ fontSize: 25 }}
+                            dropdownStyles={{ backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
                         />
                         {(clickedSubmit && !categoryData) && <Text style={styles.errorText}>Category can not be blank</Text>}
                     </View>
-                        
+
                     <View ref={imagesRef} style={{ alignItems: "center", position: "relative", top: "4.5%" }}>
-                        <Text style={{fontSize: 34}}>{`Item Image${(imageData.length > 1 ? "s" : "")}`}</Text>
-                        <ScrollView bounces={false} ref={imageDisplayer} style={{ display: "flex"}} horizontal showsHorizontalScrollIndicator={false}>
+                        <Text style={{ fontSize: 34 }}>{`Item Image${(imageData.length > 1 ? "s" : "")}`}</Text>
+                        <ScrollView bounces={false} ref={imageDisplayer} style={{ display: "flex" }} horizontal showsHorizontalScrollIndicator={false}>
                             {imageData.map((picture, index) => (
                                 <Pressable key={index}>
                                     <Image source={{ uri: picture.uri }} style={styles.picture}></Image>
@@ -358,7 +380,7 @@ export default function ReportAnItem(info) {
                                         <Text style={styles.pictureRemove}>Remove</Text>
                                     </Pressable>
                                     <Pressable onPress={() => { makeImagePrimary(index) }}>
-                                        <Text style={styles.primaryButton}>{((index == primaryImage) ? "Primary image" : "Make primary")}</Text>
+                                        <Text style={styles.primaryButton}>{((index == primaryImage) ? "Primary Image" : "Make Primary")}</Text>
                                     </Pressable>
                                     <Text style={styles.pictureNumber}>{index + 1}/3</Text>
                                 </Pressable>
@@ -368,10 +390,10 @@ export default function ReportAnItem(info) {
                             </Pressable>
                         </ScrollView>
                         {(clickedSubmit && imageData.length <= 0) && <Text style={styles.errorText}>You must have at least one image</Text>}
-                    </View> 
+                    </View>
 
                     <View ref={itemDescriptionRef} style={{ alignItems: "center", position: "relative", top: "6%" }}>
-                        <Text style={{fontSize: 34}}>Item Description</Text>
+                        <Text style={{ fontSize: 34 }}>Item Description</Text>
                         <TextInput
                             multiline={true}
                             style={{ height: "100", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
@@ -383,7 +405,7 @@ export default function ReportAnItem(info) {
                     </View>
 
                     <View ref={countyRef} style={{ alignItems: "center", position: "relative", top: "7.5%" }}>
-                        <Text style={{fontSize: 34}}>County</Text>
+                        <Text style={{ fontSize: 34 }}>County</Text>
                         <SelectList
                             data={DatabaseKeys.counties}
                             search={true}
@@ -393,16 +415,16 @@ export default function ReportAnItem(info) {
                             defaultOption={countyData ? { key: countyData, value: countyData } : undefined}
                             save='value'
                             placeholder="Select a county"
-                            inputStyles={{height: "50", fontSize: 25}}
-                            boxStyles={{height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10}}
-                            dropdownTextStyles={{fontSize: 25}}
-                            dropdownStyles={{backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10}}
+                            inputStyles={{ height: "50", fontSize: 25 }}
+                            boxStyles={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
+                            dropdownTextStyles={{ fontSize: 25 }}
+                            dropdownStyles={{ backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
                         />
                         {(clickedSubmit && !countyData) && <Text style={styles.errorText}>Category can not be blank</Text>}
                     </View>
 
                     <View ref={areaDescriptionRef} style={{ alignItems: "center", position: "relative", top: "9%" }}>
-                        <Text style={{fontSize: 34}}>Area Description</Text>
+                        <Text style={{ fontSize: 34 }}>Area Description</Text>
                         <TextInput
                             multiline={true}
                             style={{ height: "100", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
@@ -415,28 +437,28 @@ export default function ReportAnItem(info) {
 
                     <View ref={locationRef} style={{ alignItems: "center", position: "relative", top: "10.5%" }}>
                         <Text style={{ fontSize: 32, textAlign: "center" }}>Location</Text>
-                        <View style={{height: (useAuto ? "50" : "100"), width: "90%", backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, borderRadius: 10 }}>
-                            <View style={{paddingTop: "5", display: "flex", flexDirection: "row", alignSelf: "center", alignItems: "center" }}>
+                        <View style={{ height: (useAuto ? "50" : "100"), width: "90%", backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, borderRadius: 10 }}>
+                            <View style={{ paddingTop: "5", display: "flex", flexDirection: "row", alignSelf: "center", alignItems: "center" }}>
                                 <Checkbox style={{ width: 35, height: 35 }} value={useAuto} onValueChange={() => { getCurrentLocation() }} />
                                 <Text style={{ marginLeft: "5", fontSize: 25 }}>Use current location</Text>
                             </View>
 
-                            <View style={{marginTop: "10", display: (useAuto ? "none" : "flex")}}>
+                            <View style={{ marginTop: "10", display: (useAuto ? "none" : "flex") }}>
                                 <TextInput
                                     placeholder="Location"
                                     value={manualAddressData}
                                     onChangeText={(text) => { setManualAddressData(text) }}
                                     onBlur={() => { (isEmpty(manualAddressData, minLocationLength) ? setMADViolates(1) : (manualAddressData.length > maxLocationLength ? setMADViolates(2) : setMADViolates(0))) }}
-                                    style={{textAlign: "center", fontSize: 25}}
+                                    style={{ textAlign: "center", fontSize: 25 }}
                                 />
                             </View>
                         </View>
                         {(useAuto && !locationAddress) && <Text style={styles.errorText}>Please insert the location manually</Text>}
                         {(!useAuto && MADViolates !== 0) && <Text style={styles.errorText}>{(MADViolates == 1 ? "Location is too short" : "Location is too long")}</Text>}
                     </View>
-                        
+
                     <View style={{ alignItems: "center", position: "relative", top: "15%" }}>
-                        <Pressable onPress={() => { if (!reportingTicket) {checkForCompletion()} }}>
+                        <Pressable onPress={() => { if (!reportingTicket) { checkForCompletion() } }}>
                             <Text style={{ fontSize: 25, padding: "15", backgroundColor: "rgb(0, 175, 229)", borderColor: "rgb(0, 129, 168)", borderWidth: 2, borderRadius: 25 }}>
                                 {(!editEntryData ? (!reportingTicket ? "Report Item" : "Reporting ...") : (!reportingTicket ? "Save Edits" : "Saving Edits ..."))}
                             </Text>
@@ -448,7 +470,7 @@ export default function ReportAnItem(info) {
 
                 </ScrollView>
                 <Pressable style={{ position: "absolute", bottom: "5%", left: "5%", width: "50", height: "50" }}
-                    onPress={() => { navigation.goBack() }}>
+                    onPress={() => { (editEntryData ? navigation.replace("Edit Screen") : navigation.goBack()) }}>
                     <Image style={{ width: "50", height: "50" }} source={require("../assets/backIcon.png")}></Image>
                 </Pressable>
             </View>
@@ -477,7 +499,7 @@ const styles = StyleSheet.create({
     },
     picture: {
         backgroundColor: "rgb(128, 225, 255)",
-        borderColor: "rgb(74, 179, 211)", 
+        borderColor: "rgb(74, 179, 211)",
         borderWidth: 2,
         borderRadius: 10,
         width: windowDimensions.width * 0.9,
@@ -485,7 +507,7 @@ const styles = StyleSheet.create({
     },
     pictureAdd: {
         backgroundColor: "rgb(128, 225, 255)",
-        borderColor: "rgb(74, 179, 211)", 
+        borderColor: "rgb(74, 179, 211)",
         borderWidth: 2,
         borderRadius: 10,
         resizeMode: "contain",
@@ -494,10 +516,10 @@ const styles = StyleSheet.create({
         padding: windowDimensions.width * 0.3,
     },
     pictureNumber: {
-        backgroundColor: "rgb(128, 225, 255)", 
-        borderColor: "rgb(74, 179, 211)", 
-        borderWidth: 2, 
-        textAlign: "center", 
+        backgroundColor: "rgb(128, 225, 255)",
+        borderColor: "rgb(74, 179, 211)",
+        borderWidth: 2,
+        textAlign: "center",
         borderRadius: 10,
         //borderWidth: 1,
         padding: 5,
@@ -508,9 +530,9 @@ const styles = StyleSheet.create({
     },
     pictureRemove: {
         backgroundColor: "rgb(255, 195, 195)",
-        borderColor: "red", 
-        borderWidth: 2, 
-        textAlign: "center", 
+        borderColor: "red",
+        borderWidth: 2,
+        textAlign: "center",
         borderRadius: 10,
         //borderWidth: 1,
         padding: 5,
@@ -522,11 +544,10 @@ const styles = StyleSheet.create({
     primaryButton: {
         fontSize: 20,
         backgroundColor: "rgb(247, 255, 195)",
-        borderColor: "yellow", 
-        borderWidth: 2, 
-        textAlign: "center", 
+        borderColor: "yellow",
+        borderWidth: 1,
+        textAlign: "center",
         borderRadius: 10,
-        //borderWidth: 1,
         position: "absolute",
         left: windowDimensions.width * 0.6375,
         bottom: windowDimensions.width * 0.75,

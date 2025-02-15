@@ -80,9 +80,13 @@ export default function Login(props) {
                     <View style={{ alignItems: "center", position: "relative", top: "15%" }}>
                         <Text style={{ fontSize: 34 }}>Terms of service</Text>
                         <View style={{backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}>
-                            <Text style={styles.TOSRule}>- I will not post personal information on this app</Text>
-                            <Text style={styles.TOSRule}>- I will only search for items that I have lost</Text>
-                            <Text style={styles.TOSRule}>- I will not use this app to spread hate or lie to others</Text>
+                            <Text style={styles.TOSRule}>- 1. I will not post personal information on this app</Text>
+                            <Text style={styles.TOSRule}>- 2. I will only use this app to find my lost items or report lost items</Text>
+                            <Text style={styles.TOSRule}>- 3. I will not spread hate or misinformation</Text>
+                            <Text style={styles.TOSRule}>- 4. I will not expose someone's personal information</Text>
+                            <Text style={styles.TOSRule}>- 5. I will not use this app to commit acts of terrorism</Text>
+
+
                         </View>
                     </View>
                     <View ref={TOSRef} style={{ alignSelf: "center",alignItems: "center", position: "relative", top: "20%" }}>

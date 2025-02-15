@@ -77,16 +77,12 @@ export default function Login(props) {
                         />
                         {errors.lastname && <Text style={styles.errorText}>{errors.lastname.message}</Text>}
                     </View>
-                    <View style={{ alignItems: "center", position: "relative", top: "15%" }}>
+                    <View style={{width: "95%", marginLeft: "2.5%", alignItems: "center", position: "relative", top: "15%" }}>
                         <Text style={{ fontSize: 34 }}>Terms of service</Text>
                         <View style={{backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}>
-                            <Text style={styles.TOSRule}>- 1. I will not post personal information on this app</Text>
-                            <Text style={styles.TOSRule}>- 2. I will only use this app to find my lost items or report lost items</Text>
-                            <Text style={styles.TOSRule}>- 3. I will not spread hate or misinformation</Text>
-                            <Text style={styles.TOSRule}>- 4. I will not expose someone's personal information</Text>
-                            <Text style={styles.TOSRule}>- 5. I will not use this app to commit acts of terrorism</Text>
-
-
+                            <Text style={styles.TOSRule}>1. I will not post personal information on this app</Text>
+                            <Text style={styles.TOSRule}>2. I will only use this app to find my lost items or report lost items</Text>
+                            <Text style={styles.TOSRule}>3. I will not spread hate or misinformation</Text>
                         </View>
                     </View>
                     <View ref={TOSRef} style={{ alignSelf: "center",alignItems: "center", position: "relative", top: "20%" }}>
@@ -96,7 +92,7 @@ export default function Login(props) {
                         </View>
                         {(clickedSubmit && !agreeded) && <Text style={styles.errorText}>You must agree to the Terms of Service to use this app</Text>}
                     </View>
-                    <Pressable style={{  alignSelf: "center", marginTop: "120%"}} onPress={handleSubmit(onSubmit, onError)}>
+                    <Pressable style={{  alignSelf: "center", marginTop: "60%"}} onPress={handleSubmit(onSubmit, onError)}>
                         <Text style={{ fontSize: 35, padding: "15", backgroundColor: "rgb(0, 175, 229)", borderColor: "rgb(0, 129, 168)", borderWidth: 2, borderRadius: 25 }}>Create account</Text>
                     </Pressable>
                 </ScrollView>

@@ -76,7 +76,7 @@ export default function EditScreen(props) {
                 </ScrollView>
             </View>
             <Pressable style={{ position: "absolute", bottom: "5%", left: "5%", width: "50", height: "50" }}
-                onPress={() => { navigation.goBack() }}>
+                onPress={() => { navigation.navigate("Home Page") }}>
                 <Image style={{ width: "50", height: "50" }} source={require("../assets/backIcon.png")}></Image>
             </Pressable>
         </View>

@@ -385,7 +385,7 @@ export default function ReportAnItem(info) {
                                     <Text style={styles.pictureNumber}>{index + 1}/3</Text>
                                 </Pressable>
                             ))}
-                            <Pressable ref={imageInserter} style={{ display: (imageInserterVisible ? "flex" : "none") }} onPress={() => { addImagesToPage() }}>
+                            <Pressable ref={imageInserter} style={{ display: (imageInserterVisible ? "flex" : "none"), width: windowDimensions.width * 0.9, height: windowDimensions.width * 0.9, backgroundColor: "red" }} onPress={() => { addImagesToPage() }}>
                                 <Image source={require("../assets/plusIcon.png")} style={styles.pictureAdd} />
                             </Pressable>
                         </ScrollView>
@@ -478,6 +478,7 @@ export default function ReportAnItem(info) {
     )
 }
 
+
 const styles = StyleSheet.create({
     errorText: {
         borderRadius: 10,
@@ -510,10 +511,12 @@ const styles = StyleSheet.create({
         borderColor: "rgb(74, 179, 211)",
         borderWidth: 2,
         borderRadius: 10,
-        resizeMode: "contain",
-        width: windowDimensions.width * 0.9,
-        height: windowDimensions.width * 0.9,
-        padding: windowDimensions.width * 0.3,
+        width: 50,
+        height: 50,
+        //  resizeMode: "contain",
+        // width: windowDimensions.width * 0.9,
+        // height: windowDimensions.width * 0.9,
+        // padding: windowDimensions.width * 0.3,
     },
     pictureNumber: {
         backgroundColor: "rgb(128, 225, 255)",

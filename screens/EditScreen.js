@@ -52,9 +52,9 @@ export default function EditScreen(props) {
 
     return (
         <View>
-            <View style={{ height: "10%", width: "100%", backgroundColor: "rgb(0, 175, 229)", display: "flex", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
+            <SafeAreaView style={{ height: "10%", width: "100%", backgroundColor: "rgb(0, 175, 229)", display: "flex", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
                 <Text style={{ fontSize: 40, position: "absolute", bottom: "5%" }}>Edit a Report</Text>
-            </View>
+            </SafeAreaView>
             <View style={{ height: "90%", backgroundColor: "rgb(96, 218, 255)", alignItems: "center" }}>
                 <ScrollView style={{ height: "100%", width: "90%", flexGrow: 1 }} bounces={false} onLayout={(event) => { const { width, height } = event.nativeEvent.layout; setTicketSize({ width: width - 160, height }); }}>
                     <Text style={{ fontSize: 34, textAlign: "center", marginTop: "25" }}>Reports</Text>

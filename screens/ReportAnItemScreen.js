@@ -334,9 +334,9 @@ export default function ReportAnItem(info) {
 
     return (
         <View>
-            <View style={{ height: "10%", width: "100%", backgroundColor: "rgb(0, 175, 229)", display: "flex", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
+            <SafeAreaView style={{ height: "10%", width: "100%", backgroundColor: "rgb(0, 175, 229)", display: "flex", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
                 <Text style={{ fontSize: 40, position: "absolute", bottom: "5%" }}>{(!editEntryData ? "Report an Item" : "Edit a Report")}</Text>
-            </View>
+            </SafeAreaView>
             <View style={{ height: "90%", backgroundColor: "rgb(96, 218, 255)" }}>
                 <ScrollView ref={scrollViewRef} style={{ height: "100%", width: "100%", flexGrow: 1 }} bounces={false}>
                     <View style={{ alignItems: "center", position: "relative", top: "1.5%" }}>
@@ -385,7 +385,7 @@ export default function ReportAnItem(info) {
                                     <Text style={styles.pictureNumber}>{index + 1}/3</Text>
                                 </Pressable>
                             ))}
-                            <Pressable ref={imageInserter} style={{ display: (imageInserterVisible ? "flex" : "none"), width: windowDimensions.width * 0.9, height: windowDimensions.width * 0.9, backgroundColor: "red" }} onPress={() => { addImagesToPage() }}>
+                            <Pressable ref={imageInserter} style={{ display: (imageInserterVisible ? "flex" : "none"), width: windowDimensions.width * 0.9, height: windowDimensions.width * 0.9, backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, borderRadius: 10, }} onPress={() => { addImagesToPage() }}>
                                 <Image source={require("../assets/plusIcon.png")} style={styles.pictureAdd} />
                             </Pressable>
                         </ScrollView>
@@ -507,16 +507,10 @@ const styles = StyleSheet.create({
         height: windowDimensions.width * 0.9,
     },
     pictureAdd: {
-        backgroundColor: "rgb(128, 225, 255)",
-        borderColor: "rgb(74, 179, 211)",
-        borderWidth: 2,
-        borderRadius: 10,
-        width: 50,
-        height: 50,
-        //  resizeMode: "contain",
-        // width: windowDimensions.width * 0.9,
-        // height: windowDimensions.width * 0.9,
-        // padding: windowDimensions.width * 0.3,
+        marginTop: "25%",
+        marginLeft: "25%",
+        width: windowDimensions.width * 0.5,
+        height: windowDimensions.width * 0.5,
     },
     pictureNumber: {
         backgroundColor: "rgb(128, 225, 255)",

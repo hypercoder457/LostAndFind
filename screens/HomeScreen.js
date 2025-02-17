@@ -49,7 +49,9 @@ export default function HomeScreen(props) {
                     </View>
                 </Pressable>
                 <Pressable style={{marginTop: 50, height: 100, width: "95%", marginLeft: "2.5%", display: "flex", flexDirection: "row"}} onPress={() => {navigation.navigate("Edit Screen")}}>
-                    <Image source={require("../assets/editIcon.png")} style={{height: 100, width: 100, padding: 5, backgroundColor: "rgb(0, 175, 229)", borderColor: "rgb(0, 129, 168)", borderWidth: 2, borderRadius: 25}}/>
+                    <View style={{height: 100, width: 100, padding: 5, backgroundColor: "rgb(0, 175, 229)", borderColor: "rgb(0, 129, 168)", borderWidth: 2, borderRadius: 25}}>
+                    <Image source={require("../assets/editIcon.png")} style={{marginLeft: 3.75, marginTop: 3.75, height: 85, width: 85}}/>
+                    </View>
                     <View style={{flex: 2, backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10, justifyContent: "center"}}>
                         <Text adjustsFontSizeToFit numberOfLines={1} style={{fontSize: 40, textAlign: "center"}}>Edit a Report</Text>
                         <Text adjustsFontSizeToFit numberOfLines={2} style={{fontSize: 18, textAlign: "center"}}>Fix or edit a report!</Text>

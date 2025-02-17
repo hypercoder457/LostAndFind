@@ -61,7 +61,7 @@ export default function Login(props) {
                             control={control}
                             name="firstname"
                             rules={{ required: "First name is required", minLength: { value: 3, message: "First name must be within 3-25 characters long" }, maxLength: { value: 25, message: "First name must be within 3-25 characters long" }, pattern: { value: /^[A-Za-z]+$/, message: "Only letters a-Z are allowed" } }}
-                            render={({ field: { onChange, onBlur, value } }) => <TextInput onBlur={onBlur} onChangeText={onChange} value={value} placeholder="First Name"
+                            render={({ field: { onChange, onBlur, value } }) => <TextInput placeholderTextColor={"rgb(33, 100, 120)"} onBlur={onBlur} onChangeText={onChange} value={value} placeholder="First Name"
                             style={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }} />}
                         />
                         {errors.firstname && <Text style={styles.errorText}>{errors.firstname.message}</Text>}
@@ -72,7 +72,7 @@ export default function Login(props) {
                             control={control}
                             name="lastname"
                             rules={{ required: "Last name is required", minLength: { value: 3, message: "Last name must be within 3-25 characters long" }, maxLength: { value: 25, message: "Last name must be within 3-25 characters long" }, pattern: { value: /^[A-Za-z]+$/, message: "Only letters a-Z are allowed" } }}
-                            render={({ field: { onChange, onBlur, value } }) => <TextInput onBlur={onBlur} onChangeText={onChange} value={value} placeholder="Last Name"
+                            render={({ field: { onChange, onBlur, value } }) => <TextInput placeholderTextColor={"rgb(33, 100, 120)"} onBlur={onBlur} onChangeText={onChange} value={value} placeholder="Last Name"
                                 style={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }} />}
                         />
                         {errors.lastname && <Text style={styles.errorText}>{errors.lastname.message}</Text>}

@@ -174,6 +174,7 @@ export default function RecoverScreen(props) {
                         <View style={{ alignItems: "center", position: "relative", top: "9%" }}>
                             <Text style={{ fontSize: 34 }}>Item Description</Text>
                             <TextInput
+                                placeholderTextColor={"rgb(33, 100, 120)"}
                                 style={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
                                 placeholder="Item Description"
                                 value={itemDescData}
@@ -183,8 +184,9 @@ export default function RecoverScreen(props) {
                         </View>
 
                         <View style={{ alignItems: "center", position: "relative", top: "12%" }}>
-                            <Text style={{ fontSize: 25 }}>Area Describe</Text>
+                            <Text style={{ fontSize: 34 }}>Area Describe</Text>
                             <TextInput
+                                placeholderTextColor={"rgb(33, 100, 120)"}
                                 style={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
                                 placeholder="Area Describe"
                                 value={areaDescData}
@@ -196,7 +198,7 @@ export default function RecoverScreen(props) {
                     <View style={{ alignItems: "center", marginTop: "25%" }}>
                         <Text style={{ fontSize: 34 }}>Reports</Text>
                         <View style={{ height: ((Object.keys(imagesLoaded).length) <= 0 ? "50" : "auto"), width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }} onLayout={(event) => { const { width, height } = event.nativeEvent.layout; setTicketSize({ width: width - 160, height }); }}>
-                            {!showImportedData && <View style={styles.errorText}><Text style={{ textAlign: "center", fontSize: 25 }}>No reports</Text></View>}
+                            {!showImportedData && <View style={styles.errorText}><Text style={{ textAlign: "center", fontSize: 25 }}>No Reports</Text></View>}
                             {(showImportedData && (Object.keys(imagesLoaded).length) <= 0) && <Text style={{ height: "50", backgroundColor: "rgb(247, 255, 195)", borderColor: "yellow", borderRadius: 10, borderWidth: 2, textAlign: "center", fontWeight: 'bold', fontSize: 25 }}>Pulling reports</Text>}
                             {showImportedData && showImportedData.map((entry, index) => (
                                 <Pressable style={{ display: "flex", opacity: ((Object.keys(imagesLoaded).length) <= 0 ? 0 : 1), flexDirection: "row", backgroundColor: "rgb(247, 255, 195)", borderColor: "yellow", borderRadius: 10, borderWidth: 2 }} key={index} onPress={() => { navigation.navigate("Item Info Screen", { key: entry.data[0], data: entry.data[1], path: `reports/${countyData}/${categoryData}` }) }}>

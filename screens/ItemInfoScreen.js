@@ -75,7 +75,7 @@ export default function ItemInfoScreen(info) {
                 <ScrollView style={{ height: "100%", width: "100%", flexGrow: 1 }} bounces={false}>
                     <View>
                         <View style={{ alignItems: "center", position: "relative", top: "2%" }}>
-                            <Text style={{ fontSize: 34 }}>{`Item image${(entryData.images.length > 1 ? "s" : "")}`}</Text>
+                            <Text style={{ fontSize: 34 }}>{`Item Image${(entryData.images.length > 1 ? "s" : "")}`}</Text>
                             {((Object.keys(imagesLoaded).length) < entryData.images.length) &&
                                 <View style={styles.yellowPicture}>
                                     <Text style={{ textAlign: "center", fontSize: 40 }}>{`Pulling image${(entryData.images.length > 1 ? "s" : "")}`}
@@ -91,24 +91,17 @@ export default function ItemInfoScreen(info) {
                         </View>
 
                         <View style={{ alignItems: "center", position: "relative", top: "4%" }}>
-                            <Text style={{ fontSize: 34 }}>Item description</Text>
-                            <Text multiline={true} style={{ height: "auto", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}>
-                                {(entryData.itemDescription.trim() == "" ? "None" : entryData.itemDescription)}
-                            </Text>
+                            <Text style={{ fontSize: 34 }}>Item Description</Text>
+                            <TextInput multiline={true} scrollEnabled={true} editable={false} style={{height: 150, width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", textAlignVertical: "top", borderRadius: 10, padding: 10}}value={entryData.itemDescription.trim() === "" ? "None" : entryData.itemDescription}/>
                         </View>
-
                         <View style={{ alignItems: "center", position: "relative", top: "6%" }}>
                             <Text style={{ fontSize: 34 }}>Location</Text>
-                            <Text multiline={true} style={{ width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}>
-                                {entryData.areaLocation}
-                            </Text>
+                            <TextInput multiline={true} scrollEnabled={true} editable={false} style={{height: 75,width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10}} value={entryData.areaLocation}/>
                         </View>
 
                         <View style={{ alignItems: "center", position: "relative", top: "8%" }}>
-                            <Text style={{ fontSize: "34" }}>Area description</Text>
-                            <Text multiline={true} style={{ height: "auto", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}>
-                                {(entryData.areaDescription.trim() == "" ? "None" : entryData.areaDescription)}
-                            </Text>
+                            <Text style={{ fontSize: "34" }}>Area Description</Text>
+                            <TextInput multiline={true} scrollEnabled={true} editable={false} style={{height: 150, width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", textAlignVertical: "top", borderRadius: 10, padding: 10}}value={(entryData.areaDescription.trim() == "" ? "None" : entryData.areaDescription)}/>
                         </View>
 
                         <View style={{ alignItems: "center", position: "relative", top: "10%" }}>
@@ -122,7 +115,7 @@ export default function ItemInfoScreen(info) {
                     <View style={{ display: (LocalDataManager.userData.foundReports.includes((entryPath + "/" + entryKey) || foundItem) ? "none" : "flex"), alignItems: "center", position: "relative", top: "15%" }}>
                         <Pressable onPress={() => { handleFind() }}>
                             <Text style={{ fontSize: 35, padding: "15", backgroundColor: "rgb(179, 255, 156)", borderColor: "rgb(121, 172, 105)", borderWidth: 2, borderRadius: 25 }}>
-                                Report found
+                                Report Found
                             </Text>
                         </Pressable>
                     </View>

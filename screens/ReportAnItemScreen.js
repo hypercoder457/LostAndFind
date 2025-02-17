@@ -342,6 +342,7 @@ export default function ReportAnItem(info) {
                     <View style={{ alignItems: "center", position: "relative", top: "1.5%" }}>
                         <Text style={{ fontSize: 34 }}>Item Name</Text>
                         <TextInput ref={itemNameRef}
+                            placeholderTextColor={"rgb(33, 100, 120)"}
                             placeholder="Item Name"
                             value={itemNameData}
                             onChangeText={(text) => {
@@ -395,6 +396,7 @@ export default function ReportAnItem(info) {
                     <View ref={itemDescriptionRef} style={{ alignItems: "center", position: "relative", top: "6%" }}>
                         <Text style={{ fontSize: 34 }}>Item Description</Text>
                         <TextInput
+                            placeholderTextColor={"rgb(33, 100, 120)"}
                             multiline={true}
                             style={{ height: "100", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
                             placeholder="Item Description"
@@ -426,6 +428,7 @@ export default function ReportAnItem(info) {
                     <View ref={areaDescriptionRef} style={{ alignItems: "center", position: "relative", top: "9%" }}>
                         <Text style={{ fontSize: 34 }}>Area Description</Text>
                         <TextInput
+                            placeholderTextColor={"rgb(33, 100, 120)"}
                             multiline={true}
                             style={{ height: "100", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
                             placeholder="Area Description"
@@ -445,6 +448,7 @@ export default function ReportAnItem(info) {
 
                             <View style={{ marginTop: "10", display: (useAuto ? "none" : "flex") }}>
                                 <TextInput
+                                    placeholderTextColor={"rgb(33, 100, 120)"}
                                     placeholder="Location"
                                     value={manualAddressData}
                                     onChangeText={(text) => { setManualAddressData(text) }}

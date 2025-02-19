@@ -100,12 +100,12 @@ export default function ItemInfoScreen(info) {
                         </View>
 
                         <View style={{ alignItems: "center", position: "relative", top: "8%" }}>
-                            <Text style={{ fontSize: "34" }}>Area Description</Text>
+                            <Text style={{ fontSize: 34 }}>Area Description</Text>
                             <TextInput multiline={true} scrollEnabled={true} editable={false} style={{height: 150, width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", textAlignVertical: "top", borderRadius: 10, padding: 10}}value={(entryData.areaDescription.trim() == "" ? "None" : entryData.areaDescription)}/>
                         </View>
 
                         <View style={{ alignItems: "center", position: "relative", top: "10%" }}>
-                            <Text style={{ fontSize: "34" }}>Reported by</Text>
+                            <Text style={{ fontSize: 34 }}>Reported by</Text>
                             <Text multiline={false} style={{ width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}>
                                 {`${entryData.fName} ${entryData.lName}`}
                             </Text>

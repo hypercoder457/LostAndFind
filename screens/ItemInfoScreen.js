@@ -68,7 +68,7 @@ export default function ItemInfoScreen(info) {
 
     return (
         <View>
-            <SafeAreaView style={{ height: "10%", width: "100%", backgroundColor: "rgb(0, 175, 229)", display: "flex", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
+            <SafeAreaView style={{ height: "12.5%", width: "100%", backgroundColor: "rgb(0, 175, 229)", display: "flex", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
                 <Text adjustsFontSizeToFit numberOfLines={1} style={{ textAlign: "center", width: "90%", fontSize: 40, position: "absolute", bottom: "5%" }}>{entryData.itemName}</Text>
             </SafeAreaView>
             <View style={{ height: "90%", backgroundColor: "rgb(96, 218, 255)" }}>

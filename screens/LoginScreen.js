@@ -50,7 +50,7 @@ export default function Login(props) {
 
     return (
         <View>
-            <SafeAreaView style={{ height: "10%", width: "100%", backgroundColor: "rgb(0, 175, 229)", display: "flex", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
+            <SafeAreaView style={{ height: "12.5%", width: "100%", backgroundColor: "rgb(0, 175, 229)", display: "flex", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
                 <Text style={{ fontSize: 40, position: "absolute", bottom: "5%" }}>Make an Account</Text>
             </SafeAreaView>
             <View style={{ height: "90%", backgroundColor: "rgb(96, 218, 255)" }}>

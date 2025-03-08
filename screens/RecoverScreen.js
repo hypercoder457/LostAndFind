@@ -1,13 +1,10 @@
-import React, { use, useState, useRef } from "react";
-import Checkbox from 'expo-checkbox';
 import { useNavigation } from "@react-navigation/native";
-import { Image, Dimensions, ScrollView, TouchableHighlight, View, TextInput, StyleSheet, Text, Pressable, Alert } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import * as FileSystem from "expo-file-system";
+import React, { useState } from "react";
+import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { SelectList } from 'react-native-dropdown-select-list';
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import DatabaseKeys from "../DatabaseKeys";
-import LocalDataManager from "../LocalDataManager";
 import DatabaseManager from "../DatabaseManager";
 
 let importedData = null;
@@ -133,13 +130,13 @@ export default function RecoverScreen(props) {
     return (
         <View>
             <SafeAreaView style={{ height: "12.5%", width: "100%", backgroundColor: "rgb(0, 175, 229)", display: "flex", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
-                <Text style={{ fontSize: 40, position: "absolute", bottom: "5%" }}>Recover an Item</Text>
+                <Text style={{ fontSize: 40, position: "absolute", bottom: "5%" }} accessible={true} accessibilityRole="text">Recover an Item</Text>
             </SafeAreaView>
             <View style={{ height: "90%", backgroundColor: "rgb(96, 218, 255)" }}>
                 <ScrollView style={{ height: "100%", width: "100%", flexGrow: 1 }} bounces={false}>
                     <View>
                         <View style={{ alignItems: "center", position: "relative", top: "3%" }}>
-                            <Text style={{ fontSize: 34 }}>County</Text>
+                            <Text style={{ fontSize: 34 }} accessible={true} accessibilityRole="text">County</Text>
                             <SelectList
                                 search={true}
                                 placeholder="Select a county"
@@ -153,6 +150,7 @@ export default function RecoverScreen(props) {
                                 boxStyles={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
                                 dropdownTextStyles={{ fontSize: 25 }}
                                 dropdownStyles={{ backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
+                                accessible={true}
                             />
                         </View>
                         <View style={{ alignItems: "center", position: "relative", top: "6%" }}>
@@ -168,6 +166,7 @@ export default function RecoverScreen(props) {
                                 boxStyles={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
                                 dropdownTextStyles={{ fontSize: 25 }}
                                 dropdownStyles={{ backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
+                                accessible={true}
                             />
                         </View>
 
@@ -180,17 +179,19 @@ export default function RecoverScreen(props) {
                                 value={itemDescData}
                                 onChangeText={(text) => { setItemDesc(text) }}
                                 onEndEditing={() => { filterImportedData() }}
+                                accessible={true}
                             />
                         </View>
 
                         <View style={{ alignItems: "center", position: "relative", top: "12%" }}>
-                            <Text style={{ fontSize: 34 }}>Area Describe</Text>
+                            <Text style={{ fontSize: 34 }} accessible={true} accessibilityRole="text">Area Description</Text>
                             <TextInput
                                 placeholderTextColor={"rgb(33, 100, 120)"}
                                 style={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
                                 placeholder="Area Describe"
                                 value={areaDescData}
                                 onChangeText={(text) => { setAreaDesc(text) }}
+                                accessible={true}
                             />
                         </View>
                     </View>

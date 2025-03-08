@@ -1,14 +1,10 @@
-import React, { use, useState, useRef, useEffect } from "react";
-import Checkbox from 'expo-checkbox';
 import { useNavigation } from "@react-navigation/native";
-import { Image, Dimensions, ScrollView, TouchableHighlight, View, TextInput, StyleSheet, Text, Pressable, Alert } from "react-native";
+import React, { useEffect } from "react";
+import { Alert, Dimensions, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import * as FileSystem from "expo-file-system";
-import { SelectList } from 'react-native-dropdown-select-list';
-import { set } from "lodash";
 
-import LocalDataManager from "../LocalDataManager";
 import DatabaseManager from "../DatabaseManager";
+import LocalDataManager from "../LocalDataManager";
 
 const windowDimensions = Dimensions.get('window');
 
@@ -69,7 +65,7 @@ export default function ItemInfoScreen(info) {
     return (
         <View>
             <SafeAreaView style={{ height: "12.5%", width: "100%", backgroundColor: "rgb(0, 175, 229)", display: "flex", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
-                <Text adjustsFontSizeToFit numberOfLines={1} style={{ textAlign: "center", width: "90%", fontSize: 40, position: "absolute", bottom: "5%" }}>{entryData.itemName}</Text>
+                <Text adjustsFontSizeToFit numberOfLines={1} style={{ textAlign: "center", width: "90%", fontSize: 40, position: "absolute", bottom: "5%" }} accessible={true}>{entryData.itemName}</Text>
             </SafeAreaView>
             <View style={{ height: "90%", backgroundColor: "rgb(96, 218, 255)" }}>
                 <ScrollView style={{ height: "100%", width: "100%", flexGrow: 1 }} bounces={false}>
@@ -78,35 +74,53 @@ export default function ItemInfoScreen(info) {
                             <Text style={{ fontSize: 34 }}>{`Item Image${(entryData.images.length > 1 ? "s" : "")}`}</Text>
                             {((Object.keys(imagesLoaded).length) < entryData.images.length) &&
                                 <View style={styles.yellowPicture}>
-                                    <Text style={{ textAlign: "center", fontSize: 40 }}>{`Pulling image${(entryData.images.length > 1 ? "s" : "")}`}
+                                    <Text style={{ textAlign: "center", fontSize: 40 }} accessible={true}>{`Pulling image${(entryData.images.length > 1 ? "s" : "")}`}
                                     </Text>
                                 </View>}
                             <ScrollView bounces={false} style={{ height: (((Object.keys(imagesLoaded).length) < entryData.images.length) ? "0" : "auto"), display: "flex" }} horizontal showsHorizontalScrollIndicator={false}>
                                 {entryData.images.map((picture, index) => (
                                     <Pressable key={index}>
-                                        <Image onLoad={() => { setImagesLoaded((dict) => ({ ...dict, [index]: true })) }} source={{ uri: picture }} style={styles.picture}></Image>
+                                        <Image onLoad={() => { setImagesLoaded((dict) => ({ ...dict, [index]: true })) }} source={{ uri: picture }} style={styles.picture} accessible={true} alt="Picture of Item"></Image>
                                     </Pressable>
                                 ))}
                             </ScrollView>
                         </View>
 
                         <View style={{ alignItems: "center", position: "relative", top: "4%" }}>
-                            <Text style={{ fontSize: 34 }}>Item Description</Text>
-                            <TextInput multiline={true} scrollEnabled={true} editable={false} style={{height: 150, width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", textAlignVertical: "top", borderRadius: 10, padding: 10}}value={entryData.itemDescription.trim() === "" ? "None" : entryData.itemDescription}/>
+                            <Text style={{ fontSize: 34 }} accessible={true} accessibilityRole="text">Item Description</Text>
+                            <TextInput multiline={true}
+                                scrollEnabled={true} editable={false} style={{
+                                    height: 150, width: "90%",
+                                    backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)",
+                                    borderWidth: 2, textAlign: "center", textAlignVertical: "top", borderRadius: 10, padding: 10
+                                }}
+                                value={entryData.itemDescription.trim() === "" ? "None" : entryData.itemDescription} accessible={true} />
                         </View>
                         <View style={{ alignItems: "center", position: "relative", top: "6%" }}>
-                            <Text style={{ fontSize: 34 }}>Location</Text>
-                            <TextInput multiline={true} scrollEnabled={true} editable={false} style={{height: 75,width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10}} value={entryData.areaLocation}/>
+                            <Text style={{ fontSize: 34 }} accessible={true} accessibilityRole="text">Location</Text>
+                            <TextInput multiline={true} scrollEnabled={true} editable={false}
+                                style={{
+                                    height: 90, width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25,
+                                    borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10
+                                }}
+                                value={entryData.areaLocation} accessible={true} accessibilityRole="text" />
                         </View>
 
                         <View style={{ alignItems: "center", position: "relative", top: "8%" }}>
-                            <Text style={{ fontSize: 34 }}>Area Description</Text>
-                            <TextInput multiline={true} scrollEnabled={true} editable={false} style={{height: 150, width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", textAlignVertical: "top", borderRadius: 10, padding: 10}}value={(entryData.areaDescription.trim() == "" ? "None" : entryData.areaDescription)}/>
+                            <Text style={{ fontSize: 34 }} accessible={true} accessibilityRole="text">Area Description</Text>
+                            <TextInput multiline={true} scrollEnabled={true} editable={false}
+                                style={{
+                                    height: 150, width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25,
+                                    borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", textAlignVertical: "top",
+                                    borderRadius: 10, padding: 10
+                                }}
+                                value={(entryData.areaDescription.trim() == "" ? "None" : entryData.areaDescription)} accessible={true}
+                                accessibilityRole="text" />
                         </View>
 
                         <View style={{ alignItems: "center", position: "relative", top: "10%" }}>
-                            <Text style={{ fontSize: 34 }}>Reported by</Text>
-                            <Text multiline={false} style={{ width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}>
+                            <Text style={{ fontSize: 34 }} accessible={true} accessibilityRole="text">Reported by</Text>
+                            <Text multiline={false} style={{ width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }} accessible={true}>
                                 {`${entryData.fName} ${entryData.lName}`}
                             </Text>
                         </View>

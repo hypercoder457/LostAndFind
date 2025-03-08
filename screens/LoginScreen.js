@@ -41,59 +41,63 @@ export default function Login(props) {
 
     function scrollToView(target) {
         target.current.measureLayout(
-          scrollViewRef.current,
-          (x, y, width, height) => {
-            scrollViewRef.current.scrollTo({ y: y - 50, animated: true });
-          },
+            scrollViewRef.current,
+            (x, y, width, height) => {
+                scrollViewRef.current.scrollTo({ y: y - 50, animated: true });
+            },
         );
     }
 
     return (
         <View>
             <SafeAreaView style={{ height: "12.5%", width: "100%", backgroundColor: "rgb(0, 175, 229)", display: "flex", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
-                <Text style={{ fontSize: 40, position: "absolute", bottom: "5%" }}>Make an Account</Text>
+                <Text style={{ fontSize: 40, position: "absolute", bottom: "5%" }} accessible={true} accessibilityRole="text">Make an Account</Text>
             </SafeAreaView>
             <View style={{ height: "90%", backgroundColor: "rgb(96, 218, 255)" }}>
-                <ScrollView ref={scrollViewRef} style={{height: "200%",width: "100%"}} bounces={false}>
+                <ScrollView ref={scrollViewRef} style={{ height: "200%", width: "100%" }} bounces={false}>
                     <View ref={firstNameRef} style={{ alignItems: "center", position: "relative", top: "5%" }}>
-                        <Text style={{ fontSize: 34 }}>First name</Text>
+                        <Text style={{ fontSize: 34 }} accessible={true} accessibilityRole="text">First name</Text>
                         <Controller
                             control={control}
                             name="firstname"
                             rules={{ required: "First name is required", minLength: { value: 3, message: "First name must be within 3-25 characters long" }, maxLength: { value: 25, message: "First name must be within 3-25 characters long" }, pattern: { value: /^[A-Za-z]+$/, message: "Only letters a-Z are allowed" } }}
                             render={({ field: { onChange, onBlur, value } }) => <TextInput placeholderTextColor={"rgb(33, 100, 120)"} onBlur={onBlur} onChangeText={onChange} value={value} placeholder="First Name"
-                            style={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }} />}
+                                style={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }} accessible={true} />}
                         />
-                        {errors.firstname && <Text style={styles.errorText}>{errors.firstname.message}</Text>}
+                        {errors.firstname && <Text style={styles.errorText} accessible={true} accessibilityRole="text">{errors.firstname.message}</Text>}
                     </View>
                     <View ref={lastNameRef} style={{ alignItems: "center", position: "relative", top: "10%" }}>
-                        <Text style={{ fontSize: 34 }}>Last name</Text>
+                        <Text style={{ fontSize: 34 }} accessible={true} accessibilityRole="text">Last name</Text>
                         <Controller
                             control={control}
                             name="lastname"
                             rules={{ required: "Last name is required", minLength: { value: 3, message: "Last name must be within 3-25 characters long" }, maxLength: { value: 25, message: "Last name must be within 3-25 characters long" }, pattern: { value: /^[A-Za-z]+$/, message: "Only letters a-Z are allowed" } }}
                             render={({ field: { onChange, onBlur, value } }) => <TextInput placeholderTextColor={"rgb(33, 100, 120)"} onBlur={onBlur} onChangeText={onChange} value={value} placeholder="Last Name"
-                                style={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }} />}
+                                style={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }} accessible={true} />}
                         />
-                        {errors.lastname && <Text style={styles.errorText}>{errors.lastname.message}</Text>}
+                        {errors.lastname && <Text style={styles.errorText} accessible={true} accessibilityRole="text">{errors.lastname.message}</Text>}
                     </View>
-                    <View style={{width: "95%", marginLeft: "2.5%", alignItems: "center", position: "relative", top: "15%" }}>
-                        <Text style={{ fontSize: 34 }}>Terms of service</Text>
-                        <View style={{backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}>
-                            <Text style={styles.TOSRule}>1. I will not post personal information on this app</Text>
-                            <Text style={styles.TOSRule}>2. I will only use this app to find my lost items or report lost items</Text>
-                            <Text style={styles.TOSRule}>3. I will not spread hate or misinformation</Text>
+                    <View style={{ width: "95%", marginLeft: "2.5%", alignItems: "center", position: "relative", top: "15%" }}>
+                        <Text style={{ fontSize: 34 }} accessible={true} accessibilityRole="text">Terms of service</Text>
+                        <View style={{ backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}>
+                            <Text style={styles.TOSRule} accessible={true} accessibilityRole="text">1. I will not post personal information on this app</Text>
+                            <Text style={styles.TOSRule} accessible={true} accessibilityRole="text">2. I will only use this app to find my lost items or report lost items</Text>
+                            <Text style={styles.TOSRule} accessible={true} accessibilityRole="text">3. I will not spread hate or misinformation</Text>
                         </View>
                     </View>
-                    <View ref={TOSRef} style={{ alignSelf: "center",alignItems: "center", position: "relative", top: "20%" }}>
-                        <View style={{display: "flex", flexDirection: "row"}}>
-                            <Checkbox style={{width: "25", height: "25", marginRight: "25"}} value={agreeded} onValueChange={()=> {setAgreeded(!agreeded)}}/>
-                            <Text style={{fontSize: 16}}>I agree to the Terms of Service</Text>
+                    <View ref={TOSRef} style={{ alignSelf: "center", alignItems: "center", position: "relative", top: "20%" }}>
+                        <View style={{ display: "flex", flexDirection: "row" }}>
+                            <Checkbox style={{ width: "25", height: "25", marginRight: "25" }} value={agreeded} onValueChange={() => { setAgreeded(!agreeded) }} accessible={true} accessibilityRole="checkbox" />
+                            <Text style={{ fontSize: 16 }} accessible={true} accessibilityRole="text">I agree to the Terms of Service</Text>
                         </View>
-                        {(clickedSubmit && !agreeded) && <Text style={styles.errorText}>You must agree to the Terms of Service to use this app</Text>}
+                        {(clickedSubmit && !agreeded) && <Text style={styles.errorText} accessible={true} accessibilityRole="text">You must agree to the Terms of Service to use this app</Text>}
                     </View>
-                    <Pressable style={{  alignSelf: "center", marginTop: "60%"}} onPress={handleSubmit(onSubmit, onError)}>
-                        <Text style={{ fontSize: 35, padding: "15", backgroundColor: "rgb(0, 175, 229)", borderColor: "rgb(0, 129, 168)", borderWidth: 2, borderRadius: 25 }}>Create account</Text>
+                    <Pressable style={{ alignSelf: "center", marginTop: "60%" }} onPress={handleSubmit(onSubmit, onError)}>
+                        <Text style={{
+                            fontSize: 35, padding: "15", backgroundColor: "rgb(0, 175, 229)",
+                            borderColor: "rgb(0, 129, 168)", borderWidth: 2, borderRadius: 25
+                        }} accessible={true}
+                            accessibilityRole="button">Create account</Text>
                     </Pressable>
                 </ScrollView>
             </View>

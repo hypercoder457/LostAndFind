@@ -1,16 +1,16 @@
-import React, { useRef, useEffect } from "react";
-import Checkbox from 'expo-checkbox';
 import { useNavigation } from "@react-navigation/native";
-import { Image, Dimensions, ScrollView, TouchableHighlight, View, TextInput, StyleSheet, Text, Pressable, Alert } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import Checkbox from 'expo-checkbox';
 import * as FileSystem from "expo-file-system";
+import React, { useEffect, useRef } from "react";
+import { Alert, Dimensions, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { SelectList } from 'react-native-dropdown-select-list';
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import CameraManager from "../CameraManager";
-import LocationManager from "../LocationManager";
 import DatabaseKeys from "../DatabaseKeys";
-import LocalDataManager from "../LocalDataManager";
 import DatabaseManager from "../DatabaseManager";
+import LocalDataManager from "../LocalDataManager";
+import LocationManager from "../LocationManager";
 
 const windowDimensions = Dimensions.get('window');
 
@@ -300,6 +300,7 @@ export default function ReportAnItem(info) {
     }
 
     function removeImegeFromPage(index) {
+        console.log("removeImage invoked");
         const imageDataCopy = [...imageData];
         imageDataCopy.splice(index, 1);
         setImageData(imageDataCopy);
@@ -335,12 +336,12 @@ export default function ReportAnItem(info) {
     return (
         <View>
             <SafeAreaView style={{ height: "12.5%", width: "100%", backgroundColor: "rgb(0, 175, 229)", display: "flex", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
-                <Text style={{ fontSize: 40, position: "absolute", bottom: "5%" }}>{(!editEntryData ? "Report an Item" : "Edit a Report")}</Text>
+                <Text style={{ fontSize: 40, position: "absolute", bottom: "5%" }} accessible={true} accessibilityRole="text">{(!editEntryData ? "Report an Item" : "Edit a Report")}</Text>
             </SafeAreaView>
             <View style={{ height: "90%", backgroundColor: "rgb(96, 218, 255)" }}>
                 <ScrollView ref={scrollViewRef} style={{ height: "100%", width: "100%", flexGrow: 1 }} bounces={false}>
                     <View style={{ alignItems: "center", position: "relative", top: "1.5%" }}>
-                        <Text style={{ fontSize: 34 }}>Item Name</Text>
+                        <Text style={{ fontSize: 34 }} accessible={true} accessibilityRole="text">Item Name</Text>
                         <TextInput ref={itemNameRef}
                             placeholderTextColor={"rgb(33, 100, 120)"}
                             placeholder="Item Name"
@@ -350,12 +351,13 @@ export default function ReportAnItem(info) {
                             }}
                             onBlur={() => { (isEmpty(itemNameData, minNameLength) ? setItemNameViolates(1) : (itemNameData.length > maxNameLength ? setItemNameViolates(2) : setItemNameViolates(0))) }}
                             style={{ height: "50", width: "90%", backgroundColor: "rgb(128, 225, 255)", fontSize: 25, borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
+                            accessible={true}
                         />
-                        {itemNameViolates !== 0 && <Text style={styles.errorText}>{(itemNameViolates == 1 ? "Item name is too short" : "Item name is too long")}</Text>}
+                        {itemNameViolates !== 0 && <Text style={styles.errorText} accessible={true} accessibilityRole="text">{(itemNameViolates == 1 ? "Item name is too short" : "Item name is too long")}</Text>}
                     </View>
 
                     <View ref={itemCategoryRef} style={{ alignItems: "center", position: "relative", top: "3%" }}>
-                        <Text style={{ fontSize: 34 }}>Item Category</Text>
+                        <Text style={{ fontSize: 34 }} accessible={true} accessibilityRole="text">Item Category</Text>
                         <SelectList
                             search={false}
                             data={DatabaseKeys.categories}
@@ -368,33 +370,34 @@ export default function ReportAnItem(info) {
                             dropdownTextStyles={{ fontSize: 25 }}
                             dropdownStyles={{ backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
                         />
-                        {(clickedSubmit && !categoryData) && <Text style={styles.errorText}>Category can not be blank</Text>}
+                        {(clickedSubmit && !categoryData) && <Text style={styles.errorText} accessible={true} accessibilityRole="text">Category can not be blank</Text>}
                     </View>
 
                     <View ref={imagesRef} style={{ alignItems: "center", position: "relative", top: "4.5%" }}>
-                        <Text style={{ fontSize: 34 }}>{`Item Image${(imageData.length > 1 ? "s" : "")}`}</Text>
+                        <Text style={{ fontSize: 34 }} accessible={true} accessibilityRole="text">{`Item Image${(imageData.length > 1 ? "s" : "")}`}</Text>
                         <ScrollView bounces={false} ref={imageDisplayer} style={{ display: "flex" }} horizontal showsHorizontalScrollIndicator={false}>
                             {imageData.map((picture, index) => (
-                                <Pressable key={index}>
+                                <View key={index}>
                                     <Image source={{ uri: picture.uri }} style={styles.picture}></Image>
-                                    <Pressable onPress={() => { removeImegeFromPage(index) }}>
-                                        <Text style={styles.pictureRemove}>Remove</Text>
+                                    <Pressable onPress={() => { removeImegeFromPage(index) }} style={styles.pictureRemove} accessible={true} accessibilityRole="button">
+                                        <Text>Remove</Text>
                                     </Pressable>
-                                    <Pressable onPress={() => { makeImagePrimary(index) }}>
-                                        <Text style={styles.primaryButton}>{((index == primaryImage) ? "Primary Image" : "Make Primary")}</Text>
+                                    <Pressable onPress={() => { makeImagePrimary(index) }} style={styles.primaryButton} accessible={true} accessibilityRole="button">
+                                        <Text>{((index == primaryImage) ? "Primary Image" : "Make Primary")}</Text>
                                     </Pressable>
-                                    <Text style={styles.pictureNumber}>{index + 1}/3</Text>
-                                </Pressable>
+                                    <Text style={styles.pictureNumber} accessible={true} accessibilityRole="text">{`Image ${index + 1}/3`}</Text>
+                                </View>
                             ))}
                             <Pressable ref={imageInserter} style={{ display: (imageInserterVisible ? "flex" : "none"), width: windowDimensions.width * 0.9, height: windowDimensions.width * 0.9, backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, borderRadius: 10, }} onPress={() => { addImagesToPage() }}>
-                                <Image source={require("../assets/plusIcon.png")} style={styles.pictureAdd} />
+                                <Image source={require("../assets/plusIcon.png")} style={styles.pictureAdd} accessible={true}
+                                    accessibilityRole="image" alt="Add Image Icon" />
                             </Pressable>
                         </ScrollView>
-                        {(clickedSubmit && imageData.length <= 0) && <Text style={styles.errorText}>You must have at least one image</Text>}
+                        {(clickedSubmit && imageData.length <= 0) && <Text style={styles.errorText} accessible={true} accessibilityRole="text">You must have at least one image</Text>}
                     </View>
 
                     <View ref={itemDescriptionRef} style={{ alignItems: "center", position: "relative", top: "6%" }}>
-                        <Text style={{ fontSize: 34 }}>Item Description</Text>
+                        <Text style={{ fontSize: 34 }} accessible={true} accessibilityRole="text">Item Description</Text>
                         <TextInput
                             placeholderTextColor={"rgb(33, 100, 120)"}
                             multiline={true}
@@ -403,11 +406,11 @@ export default function ReportAnItem(info) {
                             value={itemDescData}
                             onChangeText={(text) => { setItemDesc(text) }}
                         />
-                        {itemDescData.length > maxItemDescriptionLength && <Text style={styles.errorText}>Item description is too long</Text>}
+                        {itemDescData.length > maxItemDescriptionLength && <Text style={styles.errorText} accessible={true} accessibilityRole="text">Item description is too long</Text>}
                     </View>
 
                     <View ref={countyRef} style={{ alignItems: "center", position: "relative", top: "7.5%" }}>
-                        <Text style={{ fontSize: 34 }}>County</Text>
+                        <Text style={{ fontSize: 34 }} accessible={true} accessibilityRole="text">County</Text>
                         <SelectList
                             data={DatabaseKeys.counties}
                             search={true}
@@ -422,11 +425,11 @@ export default function ReportAnItem(info) {
                             dropdownTextStyles={{ fontSize: 25 }}
                             dropdownStyles={{ backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, textAlign: "center", borderRadius: 10 }}
                         />
-                        {(clickedSubmit && !countyData) && <Text style={styles.errorText}>Category can not be blank</Text>}
+                        {(clickedSubmit && !countyData) && <Text style={styles.errorText} accessible={true} accessibilityRole="text">Category can not be blank</Text>}
                     </View>
 
                     <View ref={areaDescriptionRef} style={{ alignItems: "center", position: "relative", top: "9%" }}>
-                        <Text style={{ fontSize: 34 }}>Area Description</Text>
+                        <Text style={{ fontSize: 34 }} accessible={true} accessibilityRole="text">Area Description</Text>
                         <TextInput
                             placeholderTextColor={"rgb(33, 100, 120)"}
                             multiline={true}
@@ -435,15 +438,15 @@ export default function ReportAnItem(info) {
                             value={areaDescData}
                             onChangeText={(text) => { setAreaDesc(text) }}
                         />
-                        {areaDescData.length > maxAreaDescriptionLength && <Text style={styles.errorText}>Area description is too long</Text>}
+                        {areaDescData.length > maxAreaDescriptionLength && <Text style={styles.errorText} accessible={true} accessibilityRole="text">Area description is too long</Text>}
                     </View>
 
                     <View ref={locationRef} style={{ alignItems: "center", position: "relative", top: "10.5%" }}>
-                        <Text style={{ fontSize: 32, textAlign: "center" }}>Location</Text>
+                        <Text style={{ fontSize: 32, textAlign: "center" }} accessible={true} accessibilityRole="text">Location</Text>
                         <View style={{ height: (useAuto ? "50" : "100"), width: "90%", backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, borderRadius: 10 }}>
                             <View style={{ paddingTop: "5", display: "flex", flexDirection: "row", alignSelf: "center", alignItems: "center" }}>
-                                <Checkbox style={{ width: 35, height: 35 }} value={useAuto} onValueChange={() => { getCurrentLocation() }} />
-                                <Text style={{ marginLeft: "5", fontSize: 25 }}>Use current location</Text>
+                                <Checkbox style={{ width: 35, height: 35 }} value={useAuto} onValueChange={() => { getCurrentLocation() }} accessible={true} accessibilityRole="checkbox" />
+                                <Text style={{ marginLeft: "5", fontSize: 25 }} accessible={true} accessibilityRole="text">Use current location</Text>
                             </View>
 
                             <View style={{ marginTop: "10", display: (useAuto ? "none" : "flex") }}>
@@ -454,28 +457,28 @@ export default function ReportAnItem(info) {
                                     onChangeText={(text) => { setManualAddressData(text) }}
                                     onBlur={() => { (isEmpty(manualAddressData, minLocationLength) ? setMADViolates(1) : (manualAddressData.length > maxLocationLength ? setMADViolates(2) : setMADViolates(0))) }}
                                     style={{ textAlign: "center", fontSize: 25 }}
+                                    accessible={true}
                                 />
                             </View>
                         </View>
-                        {(useAuto && !locationAddress) && <Text style={styles.errorText}>Please insert the location manually</Text>}
-                        {(!useAuto && MADViolates !== 0) && <Text style={styles.errorText}>{(MADViolates == 1 ? "Location is too short" : "Location is too long")}</Text>}
+                        {(useAuto && !locationAddress) && <Text style={styles.errorText} accessible={true} accessibilityRole="text">Please insert the location manually</Text>}
+                        {(!useAuto && MADViolates !== 0) && <Text style={styles.errorText} accessible={true} accessibilityRole="text">{(MADViolates == 1 ? "Location is too short" : "Location is too long")}</Text>}
                     </View>
 
                     <View style={{ alignItems: "center", position: "relative", top: "15%" }}>
-                        <Pressable onPress={() => { if (!reportingTicket) { checkForCompletion() } }}>
-                            <Text style={{ fontSize: 25, padding: "15", backgroundColor: "rgb(0, 175, 229)", borderColor: "rgb(0, 129, 168)", borderWidth: 2, borderRadius: 25 }}>
+                        <Pressable onPress={() => { if (!reportingTicket) { checkForCompletion() } }} accessible={true}>
+                            <Text style={{ fontSize: 25, padding: "15", backgroundColor: "rgb(0, 175, 229)", borderColor: "rgb(0, 129, 168)", borderWidth: 2, borderRadius: 25 }} accessible={true} accessibilityRole="text">
                                 {(!editEntryData ? (!reportingTicket ? "Report Item" : "Reporting ...") : (!reportingTicket ? "Save Edits" : "Saving Edits ..."))}
                             </Text>
                         </Pressable>
                     </View>
 
-                    <View style={{ alignItems: "center", paddingTop: "100%" }}>
-                    </View>
+                    <View style={{ alignItems: "center", paddingTop: "100%" }}></View>
 
                 </ScrollView>
                 <Pressable style={{ position: "absolute", bottom: "5%", left: "5%", width: "50", height: "50" }}
                     onPress={() => { (editEntryData ? navigation.replace("Edit Screen") : navigation.goBack()) }}>
-                    <Image style={{ width: "50", height: "50" }} source={require("../assets/backIcon.png")}></Image>
+                    <Image style={{ width: "50", height: "50" }} source={require("../assets/backIcon.png")} accessible={true} accessibilityRole="image" alt="Back button"></Image>
                 </Pressable>
             </View>
         </View>
@@ -526,7 +529,7 @@ const styles = StyleSheet.create({
         padding: 5,
         fontSize: 15,
         position: "absolute",
-        left: windowDimensions.width * 0.8,
+        left: windowDimensions.width * 0.64,
         bottom: windowDimensions.width * 0.05,
     },
     pictureRemove: {
@@ -540,7 +543,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         position: "absolute",
         left: windowDimensions.width * 0.025,
-        bottom: windowDimensions.width * 0.04,
+        bottom: windowDimensions.width * 0.04
     },
     primaryButton: {
         fontSize: 20,
@@ -550,9 +553,12 @@ const styles = StyleSheet.create({
         textAlign: "center",
         borderRadius: 10,
         position: "absolute",
-        left: windowDimensions.width * 0.6375,
+        left: windowDimensions.width * 0.63,
         bottom: windowDimensions.width * 0.75,
+        // width: 100,
+        // height: 50,
         width: 100,
         height: 50,
+        alignItems: "center"
     }
 })

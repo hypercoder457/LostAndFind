@@ -28,13 +28,19 @@
           "READ_EXTERNAL_STORAGE",
           "WRITE_EXTERNAL_STORAGE"
         ]
-      }
+      },
+      "package": "com.lostandfind.lostandfind"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "7de6d20a-1282-410a-92ab-e7e587caa046"
+      }
+    }
   }
 }

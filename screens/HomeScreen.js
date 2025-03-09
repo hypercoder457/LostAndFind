@@ -69,7 +69,7 @@ export default function HomeScreen(props) {
                             accessible={true} accessibilityRole="text">Fix or edit a report!</Text>
                     </View>
                 </Pressable>
-                <View style={{ alignItems: "center", marginTop: 100 }}>
+                <View style={{ alignItems: "center", marginTop: 100, marginBottom: 40 }}>
                     <Image source={require("../assets/logo.png")}
                         style={{ height: "200", width: "200" }} accessible={true}
                         accessibilityRole="image" alt="Lost and Find App Logo" />

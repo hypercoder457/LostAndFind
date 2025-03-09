@@ -1,4 +1,5 @@
 import * as Location from "expo-location";
+import { Alert } from "react-native";
 
 export default class LocationManager {
     static hasPermission = false;
@@ -25,6 +26,7 @@ export default class LocationManager {
                 return (address[0]);
             } catch (err) {
                 console.warn("Unable to fetch location!");
+                Alert.alert("Error", "This app requires location services to function properly. Please enable location services for this app in your device settings.");
             }
         }
     }

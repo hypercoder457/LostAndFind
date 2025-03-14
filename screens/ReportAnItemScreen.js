@@ -443,21 +443,23 @@ export default function ReportAnItem(info) {
 
                     <View ref={locationRef} style={{ alignItems: "center", position: "relative", top: "10.5%" }}>
                         <Text style={{ fontSize: 32, textAlign: "center" }} accessible={true} accessibilityRole="text">Location</Text>
-                        <View style={{ height: (useAuto ? "50" : "100"), width: "90%", backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, borderRadius: 10 }}>
+                        <View style={{ height: (useAuto ? "100`" : "150"), width: "90%", backgroundColor: "rgb(128, 225, 255)", borderColor: "rgb(74, 179, 211)", borderWidth: 2, borderRadius: 10 }}>
                             <View style={{ paddingTop: "5", display: "flex", flexDirection: "row", alignSelf: "center", alignItems: "center" }}>
                                 <Checkbox style={{ width: 35, height: 35 }} value={useAuto} onValueChange={() => { getCurrentLocation() }} accessible={true} accessibilityRole="checkbox" />
                                 <Text style={{ marginLeft: "5", fontSize: 25 }} accessible={true} accessibilityRole="text">Use current location</Text>
                             </View>
 
-                            <View style={{ marginTop: "10", display: (useAuto ? "none" : "flex") }}>
+                            <View style={{ marginTop: "10", display: (useAuto ? "none" : "flex"), flex: 1}}>
                                 <TextInput
                                     placeholderTextColor={"rgb(33, 100, 120)"}
                                     placeholder="Location"
                                     value={manualAddressData}
                                     onChangeText={(text) => { setManualAddressData(text) }}
                                     onBlur={() => { (isEmpty(manualAddressData, minLocationLength) ? setMADViolates(1) : (manualAddressData.length > maxLocationLength ? setMADViolates(2) : setMADViolates(0))) }}
-                                    style={{ textAlign: "center", fontSize: 25 }}
+                                    style={{ textAlign: "center", fontSize: 25, minHeight: 50 }}
                                     accessible={true}
+                                    numberOfLines={3}
+                                    multiline={true}
                                 />
                             </View>
                         </View>

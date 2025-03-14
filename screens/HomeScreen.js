@@ -3,6 +3,7 @@ import React from "react";
 import { Alert, Image, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
+//import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import LocalDataManager from "../LocalDataManager";
 

@@ -92,6 +92,7 @@ export default function Login(props) {
                         </View>
                         {(clickedSubmit && !agreeded) && <Text style={styles.errorText} accessible={true} accessibilityRole="text">You must agree to the Terms of Service to use this app</Text>}
                     </View>
+                    
                     <Pressable style={{ alignSelf: "center", marginTop: "60%" }} onPress={handleSubmit(onSubmit, onError)}>
                         <Text style={{
                             fontSize: 35, padding: "15", backgroundColor: "rgb(0, 175, 229)",
@@ -99,6 +100,9 @@ export default function Login(props) {
                         }} accessible={true}
                             accessibilityRole="button">Create account</Text>
                     </Pressable>
+
+                    <View style={{ alignItems: "center", paddingTop: "32.5%" }}>
+                    </View>
                 </ScrollView>
             </View>
         </View>

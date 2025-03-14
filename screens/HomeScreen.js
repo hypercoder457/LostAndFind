@@ -1,16 +1,16 @@
-import React from "react";
-import { Text, View, Image, Pressable, Alert, ScrollView } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { Alert, Image, Pressable, ScrollView, Text, View } from "react-native";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
 
 import LocalDataManager from "../LocalDataManager";
-import styles from "../styles";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function HomeScreen(props) {
     //AsyncStorage.clear();
 
     const navigation = useNavigation();
+    const insets = useSafeAreaInsets();
 
     function canReportAnItem() {
         if (LocalDataManager.dataLoaded) {
@@ -30,6 +30,7 @@ export default function HomeScreen(props) {
 
     return (
         <View>
+            <StatusBar translucent backgroundColor="transparent" style="dark" />
             <SafeAreaView style={{ height: "12.5%", width: "100%", backgroundColor: "rgb(0, 175, 229)", display: "flex", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
                 <Text style={{ fontSize: 40, position: "absolute", bottom: "5%" }} accessible={true} accessibilityRole="text">Home Page</Text>
             </SafeAreaView>

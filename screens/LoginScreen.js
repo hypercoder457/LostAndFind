@@ -1,12 +1,14 @@
-import React, { useState, useRef } from "react";
-import { useForm, Controller } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
-import { Button, TextInput, StyleSheet, Text, View, Pressable, ScrollView } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import Checkbox from 'expo-checkbox';
+import React, { useRef, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import LocalDataManager from "../LocalDataManager";
+import { StatusBar } from "expo-status-bar";
+
 import DatabaseManager from "../DatabaseManager";
+import LocalDataManager from "../LocalDataManager";
 
 export default function Login(props) {
     const { control, handleSubmit, formState: { errors } } = useForm();
@@ -50,6 +52,7 @@ export default function Login(props) {
 
     return (
         <View>
+            <StatusBar translucent backgroundColor="transparent" style="dark" />
             <SafeAreaView style={{ height: "12.5%", width: "100%", backgroundColor: "rgb(0, 175, 229)", display: "flex", alignContent: "center", justifyContent: "center", alignItems: "center" }}>
                 <Text style={{ fontSize: 40, position: "absolute", bottom: "5%" }} accessible={true} accessibilityRole="text">Make an Account</Text>
             </SafeAreaView>

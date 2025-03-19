@@ -7,7 +7,8 @@
     "start-expo-go": "expo start --go",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "build": "eas build -p android --profile production"
   },
   "dependencies": {
     "@expo-google-fonts/chewy": "^0.2.3",
